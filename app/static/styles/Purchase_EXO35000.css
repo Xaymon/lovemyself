@@ -1,0 +1,99 @@
+.bg_p3{
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -100;
+    height: 97vh;
+}
+.bg-video_p3{
+    width: 100%;
+    object-fit: cover;
+    height: 100vh;
+}
+
+.bg-purchase_p3{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-87.5%,-50%);
+}
+img.brown_p3{
+    width: 175%;
+}
+
+.product_p3{
+    position: fixed;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.button_p3{
+    position: fixed;
+  top: 82.7%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.buy_p3{
+    width: 200px;
+    height: 65px;
+    background-color: #ef0774;
+    color: white;
+    text-align: center;
+}
+.buy_p3:active{
+    background-color: #f78abd;
+    color: #f7f3ef;
+}
+p.text_p3{
+    padding-top: 23px;
+    font-family: sans-serif;
+    font-size: 18pt;
+}
+.text-content_p3{
+    position: fixed;
+    font-size: 18pt;
+    text-align: center;
+    top: 0%;
+    left: 36.9%;
+    transform: translate(-50%,-50%);
+}
+p.purchase_p3{
+    position: fixed;
+    color: white;
+    font-family: sans-serif;
+    font-size: 35pt;
+}
+.text-detail_p3{
+    position: absolute;
+    text-align: center;
+    top: 22.5%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+p.Question_p3{
+    color: white;
+    font-family: sans-serif;
+    font-size: 22pt;
+}
+.theproduct_p3{
+    position: absolute;
+    text-align: center;
+    top: 33.5%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+p.name-product_p3{
+    color: #cacecd;
+    font-family: sans-serif;
+    font-size: 16pt;
+}
+.exit-button_p3{
+    position: absolute;
+    text-align: center;
+    top: 13%;
+    left: 89.8%;
+    transform: translate(-50%,-50%);
+}

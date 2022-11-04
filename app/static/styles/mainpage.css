@@ -1,0 +1,35 @@
+.label {
+    color: white;
+    padding: 8px;
+    font-family: 'phetsarath OT';
+  }
+  .success {background-color: #04AA6D;text-align: center;} /* Green */
+  .info {background-color: #2196F3;} /* Blue */
+  .warning {background-color: #ff9800;} /* Orange */
+  .danger {background-color: #f44336;} /* Red */
+  .other {background-color: #e7e7e7; color: black;} /* Gray */
+
+  .card-header {
+    height: 50px;
+    background-color: #000;
+    border-bottom-color: #fff;
+    border-top: none;
+    border-radius: 0;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+    border-bottom: 1px solid whitesmoke;
+
+}
+.card-body {
+  background-color: #446F9A;
+}
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #34495e;
+  color: #f3f3f3;
+} */
+.bb {
+  background-color: #FFFFFF;
+}
