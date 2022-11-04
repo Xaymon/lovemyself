@@ -1,0 +1,144 @@
+{% extends "layout/layout.html" %}
+{% block title %}ການຈັດການຊະ​ນິດ​ນ້ຳ​ທີ່​ໃຊ້{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <center>
+                ກຳ​ນົດຊະ​ນິດ​ນ້ຳ​ທີ່​ໃຊ້
+              </center>
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <script>
+                $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+                  $(".alert-dismissible").alert('close');
+                });
+              </script>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+            </div>
+            <div class="card-body">
+              <form action="/save_water_type" method="post">
+                
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">​ລະ​ຫັດຊະ​ນິດ​ນ້ຳ</label>
+                  <input class="form-control" type="text" value="{{doc_no}}" name="wt_id" readonly/>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">ຊື່​​ຊະ​ນິດ​ນ້ຳ</label>
+                  <input class="form-control" type="text" value="" required name="​​wt_name">
+                </div>
+                <button type="submit" class="btn btn-primary form-control">ບັນທຶກ</button>
+                <hr>
+                <div class="d-flex flex-wrap justify-content-around">
+                <button type="reset" style="width: 150px;" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                <button onclick="history.back()" style="width: 150px;" class="btn btn-secondary">ກັບຄືນ</button>
+                </div>
+
+                <!-- <div class="container">
+                  <div class="row justify-content-sm-center">
+                    <div class="col-sm-auto" style="border: 1px solid;">
+                      <button type="reset" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                    </div>
+                    <div class="col-sm-auto"  style="border: 1px solid;">
+                      <button onclick="history.back()" class="btn btn-secondary">ກັບຄືນ</button>
+                    </div>
+                  </div>
+                </div> -->
+                  
+                  
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8" style="background-color: whitesmoke; padding-top: 10px;padding-right: 15px;border-radius: 5px;">
+          <table class="table table-sm table-hover table-responsive-sm table-responsive-md table-responsive-xl" id="Ratetable">
+            <thead class="text-white" style="background-color:rgb(12, 100, 154);">
+              <tr>
+                <th scope="col">ລະ​ຫັດຊະ​ນິດ​ນ້ຳ</th>
+                <th scope="col">​ຊື່​ຊະ​ນິດ​ນ້ຳ</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in wt_list %}
+              <tr>
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+                <td><a href="#"><i class="bi bi-pencil-square" data-toggle="modal" data-target="#update_water_type/{{item[0]}}"></i></a>
+                    <a href="#" onclick="deleteitem('{{item[0]}}')"><i class="bi bi-trash-fill" id="bitrash"></i></a></td>
+              </tr>
+              <div class="modal fade" id="update_water_type/{{item[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">ເເກ້ໄຂຂໍ້ມູນຊະ​ນິດ​ນ້ຳ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="background-color: #EFEFEF;">
+
+                      <form action="/update_water_type/{{item[0]}}" method="post">
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">ລະ​ຫັດຊະ​ນິດ​ນ້ຳ</label>
+                          <input class="form-control" type="text" required name="wt_id" value="{{item[0]}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">ຊື່​ຊະ​ນິດ​ນ້ຳ</label>
+                          <input class="form-control" type="text" required name="wt_name" value="{{item[1]}}">
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">ຍົກເລີກ</button>
+                          <button type="submit" id="" class="btn btn-primary">ບັນທຶກ</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function deleteitem(id) {
+    swal({
+      title: 'ທ່ານຕ້ອງການລົບຂໍ້ມູນແທ້ບໍ໋?',
+      text: "ທ່ານຈະບໍ່ສາມາດຮ້ອງຄືນຂໍ້ມູນນີ້ໃດ້!",
+      type: 'question',
+      showCancelButton: true,
+      cancelButtonColor: '#3085d6',
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'ເຈົ້າ, ແມ່ນແລ້ວ!',
+      cancelButtonText: 'ບໍ່,ກັບຄືນ!',
+    }).then(function () {
+      location.href = "/delete_water_type/" + id;
+    })
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,332 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.5/gsap.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script type="text/javascript" src="js/addons/datatables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ສະ​ໝັກ​ສະ​ມາ​ຊິກ</title>
+<style>
+    /* BASIC */
+    .avatar {
+
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        border-style: solid;
+        border-color: darkgray;
+        }
+  #register {color: darkslateblue;}
+  #register:hover {color: darkslateblue;}
+
+    html {
+        background-color: #56baed;
+    }
+
+    body {
+        background-color: ghostwhite;
+        font-family: 'Noto Sans Lao';
+    }
+
+    a {
+        color: #92badd;
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 400;
+    }
+
+    /* STRUCTURE */
+
+    #log_in{
+        background-color:darkslategrey;
+        border-radius: 25px;
+    }
+
+
+    #log_in:hover{
+        background-color: darkslateblue
+    }
+
+</style>
+<br>
+<div class="container col-sm-10  d-flex justify-content-center" style="padding: 0 15% 0 15%;">
+    <!-- <div class="card" style="background-color: floralwhite;"> -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card" style="background-color: whitesmoke;border: 1px solid darkblue;box-shadow: 0 0 0 .4em #32557f;">
+                        <div class="card-header text-white" style="font-size: 30px;background-color: steelblue;border-bottom: 5px darkblue solid;">
+                            <center>
+                                ຟອມລົງທະບຽນ
+                            </center>
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ message }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <script>
+                                $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+                                    $(".alert-dismissible").alert('close');
+                                });
+                            </script>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                        <div class="card-body" style="background-color: whitesmoke;">
+
+                            <form class="" action="/register" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="row ">
+                                            <input type="text" class="form-control form-control-sm" name="cust_id" hidden value="{{doc_no}}"
+                                                    placeholder="ປ້ອນລາຍຊື່ນາມສະກຸນ">
+                                            <div class="ms-4 mt-3 col-md-5">
+                                                <label for="fristname" class="a">ຊື່ ແລະ ນາມສະກຸນ:</label>
+                                                <input type="text" class="form-control form-control-sm" name="cust_name"
+                                                    placeholder="ປ້ອນລາຍຊື່ນາມສະກຸນ">
+                                            </div>
+                                            <div class="ms-4 mt-3 col-md-5">
+                                                <label for="telephone" class="a">ເບີໂທ:</label>
+                                                <input type="number" class="form-control form-control-sm w-100" name="cust_tel"
+                                                    placeholder="ກະລຸນາປ້ອນເບີໂທ">
+                                            </div>
+
+                                            <div class="input_field ms-3 mt-5 col-md-4">
+                                                <input class="c1" type="radio" name="cust_gender" id="cust_gender">
+                                                <label class="form-check-label me-2" for="gender">
+                                                    ເພດຊາຍ
+                                                </label>
+                                                <input class="c2" type="radio" name="cust_gender" id="cust_gender" checked>
+                                                <label class="form-check-label" for="gender">
+                                                    ເພດຍິງ
+                                                </label>
+                                            </div>
+                    
+                                            <div class="input_field mt-3 col-md-3">
+                                                <div class="label a ">ວັນເດືອນປີເກີດ</div>
+                                                <input class="f1 text-center" type="date" style="width: 150px;" name="cust_bd" id="cust_bd"  onchange="age()">
+                                            </div>
+
+                                            <div class="input_field ms-5 mt-3 col-md-3">
+                                                <div class="label a ">ອາ​ຍຸ</div>
+                                                <input type="text" class="form-control form-control-sm" style="width: 50px;" name="cust_age" id="cust_age" readonly>
+                                            </div>
+                                            
+                                            <div class="label a col-md-1">
+                                            </div>
+                                            
+                                            <div class="label a mb-3 mt-1 col-md-3"> ແຂວງ <br>
+                                                <input type="text" class="form-control form-control-sm" id="cust_province" name="cust_province">
+                                                <!-- <select id="cust_province" name="cust_province" class="form-control form-control-sm" onchange="show_city()">
+                                                    <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                                                    {% for items in pro_list %}
+                                                    <option value={{items[0]}}>{{items[1]}}</option>
+                                                    {% endfor %}
+                                                  </select> -->
+                                            </div>
+                                            <div class="label a mb-3 mt-1 col-md-3"> ເມືອງ <br>
+                                                <input type="text" class="form-control form-control-sm" id="cust_district" name="cust_district">
+                                                <!-- <select id="cust_district" name="cust_district" class="form-control form-control-sm" onchange="show_village()">
+                                                    <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                                                    {% for items in dis_list %}
+                                                    <option value={{items[0]}}>{{items[1]}}</option>
+                                                    {% endfor %}
+                                                  </select> -->
+                                            </div>
+                                            <div class="label a mb-3 mt-1 col-md-3"> ບ້ານ <br>
+                                                <input type="text" class="form-control form-control-sm" name="cust_village" id="cust_village">
+                                                <!-- <select class="form-control form-control-sm" name="cust_village" id="cust_village">
+                                                    <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                                                    
+                                                    
+                                                  </select> -->
+                                            </div>
+
+                                            <fieldset class="px-4 py-4" style="border: 1px solid darkblue;">
+                                                <center><legend style="font-size: 15px;color: darkblue;font-weight: bold;">ບັນຊີລູກ​ຄ້າ</legend></center>
+                                            <div class="row">
+                                                <div class="ms-4 col-md-5">
+                                                    <label for="text" class="a">ບັນຊີ:</label>
+                                                    <input type="text" class="form-control form-control-sm w-100" name="user_name"
+                                                        placeholder="ກະລຸນາປ້ອນບັນຊີ">
+                                                </div>
+                                                <div class="ms-4 col-md-5">
+                                                    <label for="password" class="a">ລະຫັດຜ່ານ:</label>
+                                                    <input type="password" class="form-control form-control-sm w-100" name="user_pwd"
+                                                        placeholder="ກະລຸນາປ້ອນລະຫັດ">
+                                                </div>
+                                            </div>
+                                            </fieldset>
+                                            
+                                            <!-- <div class="form-group ">
+                                                {% with messages = get_flashed_messages()  %}
+                                                {% if messages %}
+                                                {% for message in messages %}
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                  {{ message }}
+                                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                  </button>
+                                                </div>
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endwith %}
+                                               <center><input type="submit" value="Register" class="btn btn-primary mt-3" name=""></center>
+                                               <p style="padding:5px;">
+                                               <center><a href="/login" class="btn btn-dark ">Login</a></p></center>
+                                                
+                                              </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-10 ms-4">
+                                                <div style="text-align: center">
+                                                    <img id='img-upload' />
+                                                    <div id="temp_img">
+                                                        <img id="img-pro" alt="Avatar" class="avatar mb-1" src="{{url_for('static',filename='images/Default.png')}}" width="180px" height="180px" />
+                                                        <!-- {% if filename %}
+                                                        <div>
+                                                            <img src="{{ url_for('display_image', filename=filename) }}">
+                                                        </div>
+                                                        {% endif %} -->
+                                                    </div>
+                                                    <input type="file" name="file" class="form-control" autocomplete="off" onchange="readURL(this);">
+                                                    <!--ເລືອກຮູບພາບ-->
+                                                    <br>
+                                                    <!-- <div class="height-100 d-flex justify-content-center align-items-center"> <button
+                                                            type="button" class="btn btn-primary T" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"> ເລືອກຮູບ </button>  
+                                                    </div>
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: black;">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        ອັບໂຫລດຮູບໂປລຟາຍ</h5> <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p class="body-desc">
+                                                                        ກະລຸນາປ້ອນຮູບໂປລຟາຍຂອງທ່ານ. </p>
+                                                                    <div class="photo-input"> <input type="file" id="loadFile" name="file" autocomplete="off"
+                                                                            onchange="console.log(this.files[0].name);" /> <button
+                                                                            class="btn btn-sm btn-primary"
+                                                                            onclick="document.getElementById('loadFile').click()">
+                                                                            ເລືອກຮູບພາບ </button> </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <p class="footer-title">
+                                                                        ຖ້າຮູບທ່ານບໍ່ສາມາດອັບລົງໄດ້ ກະລຸນາເລືອກຮູບໃຫມ່ທີ່ມີຂະໜາດນ້ອຍລົງ.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <center><input type="submit" value="ສະ​ໝັກ​ສະ​ມາ​ຊິກ" class="btn btn-primary mt-3" name=""></center>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                      <a href="/login" class="btn btn-dark "><i class="bi bi-arrow-return-left"></i>ເຂົ້າສູ່ລະບົບ</a></p>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+</div>
+<script type="text/javascript">
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+        $('#img-pro').attr('src', e.target.result).width(180).height(180);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+    }
+    function age() {
+    var bd = document.getElementById('cust_bd').value;
+    var bdtime = +new Date(bd); //var Bday = (new Date(Bdate)).getTime();
+    var result = ~~ ((Date.now() - bdtime) / (31557600000));
+    var age = document.getElementById('cust_age');
+    age.value = result;
+}
+
+//     function show_city() {
+//     var y = document.getElementById("cust_province").value;
+//     fetch('districtpredict/' + y).then(function (response) {
+//       response.json().then(function (data) {
+//         optionHTML = '';
+//         for (city_c of data.districtlist) {
+//           optionHTML += "<option value='" + city_c[0] + "'>" + city_c[1] + "</option>"
+//         }
+//         // unit_clothes.innerHTML = "" + optionHTML;
+//         cust_district.innerHTML = "<option value='' selected disabled>--ເລືອກ--</option>" + optionHTML;
+//       });
+//     });
+//     console.log(document.getElementById("cust_province").value);
+//     console.log(document.getElementById("cust_village").value);
+//     console.log(document.getElementById("cust_district").value);
+//   }
+
+  
+
+//   function show_village() {
+//     var z = document.getElementById("cust_district").value;
+//     fetch('villagepredict/' + z).then(function (response) {
+//       response.json().then(function (data) {
+//         optionHTML = '';
+//         for (village_c of data.villagelist) {
+//           optionHTML += "<option value='" + village_c[0] + "'>" + village_c[1] + "</option>"
+//         }
+//         // unit_clothes.innerHTML = "" + optionHTML;
+//         cust_village.innerHTML = "<option value='' selected disabled>--ເລືອກ--</option>" + optionHTML;
+//       });
+//     });
+//     console.log(document.getElementById("cust_province").value);
+    
+//     console.log(document.getElementById("cust_district").value);
+
+//     console.log(document.getElementById("cust_village").value);
+//   }
+</script>
+<!-- <script>
+    document.getElementById('dt').max = new Date(
+        new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+</script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

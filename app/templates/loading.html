@@ -1,48 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>ກະ​ລຸ​ນາ​ລໍຖ້າ-ກຳລັງເຂົ້າສູ່ລະບົບ</title>
-    <link rel= "stylesheet" type= "text/css" 
-    href= "{{ url_for('static',filename='styles/loading.css') }}">
     <style>
-      #myVideo {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%; 
-        min-height: 100%;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Noto Sans Lao';
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: whitesmoke;
+        }
+
+        .progress-container {
+            height: 0.8rem;
+            width: 32rem;
+            border-radius: 0.4rem;
+            border: #066AA0 1px solid;
+
+            /* background: #000; */
+        }
+
+        .progress-container .progress {
+            height: 100%;
+            width: 0;
+            border-radius: 0.4rem;
+
+            background: #066AA0;
+
+            transition: width 0.4s ease;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <!-- video -->
-    <video autoplay muted loop id="myVideo">
-      <source src="{{ url_for('static',filename='video/bgm_login.mp4') }}" type="video/mp4">
-    </video>
+<body>
+    <div class="container">
+        <div class="row">
+          <div class="col" style="text-align: center;">
+            <h2>ກຳລັງເຂົ້າສູ່ລະບົບ</h2>
+          </div>
+          <div class="col">
+            <div class="progress-container">
+                <div class="progress"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+    function aa(){
+        window.location.assign("/home")
+}
+    const progressbar = document.querySelector(".progress");
 
-    <div id="preloader">
-      <div id="loader"></div>
-    </div>
-  </body>
-  <script>
-    function aa() {
-      window.location.assign("/home");
-    }
-    // const progressbar = document.querySelector(".progress");
-
-    // const changeProgress = (progress) => {
-    //     progressbar.style.width = `${progress}%`;
-    // };
+    const changeProgress = (progress) => {
+        progressbar.style.width = `${progress}%`;
+    };
 
     /* change progress after 1 second (only for showcase) */
     setTimeout(() => changeProgress(10), 1000);
-    setTimeout(() => changeProgress(30), 2000);
-    setTimeout(() => changeProgress(60), 3000);
-    // // setTimeout(() => changeProgress(60), 4000);
-    // // setTimeout(() => changeProgress(85), 5000);
-    // setTimeout(() => changeProgress(98), 4000);
-    // setTimeout(() => changeProgress(100), 5000);
-    setTimeout(aa, 3500);
-  </script>
+    setTimeout(() => changeProgress(20), 2000);
+    setTimeout(() => changeProgress(40), 3000);
+    setTimeout(() => changeProgress(60), 4000);
+    setTimeout(() => changeProgress(85), 5000);
+    setTimeout(() => changeProgress(98), 5266);
+    setTimeout(() => changeProgress(100), 6000);
+    setTimeout(aa, 7000);
+
+</script>
+
 </html>

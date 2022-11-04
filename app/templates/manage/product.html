@@ -1,0 +1,231 @@
+{% extends "layout/layout.html" %}
+{% block title %}ການຈັດການຂໍ້ມູນສິນຄ້າ{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <center>
+                ຈັດການຂໍ້ມູນສິນຄ້າ
+              </center>
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <script>
+                $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+                  $(".alert-dismissible").alert('close');
+                });
+              </script>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+            </div>
+            <div class="card-body">
+              <form action="/save_product" method="post">
+
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">​ລະ​ຫັດ​​ສິນ​ຄ້າ</label>
+                  <input class="form-control" type="text" value="{{doc_no}}" name="p_id" readonly/>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">ຊື່​ສິນ​ຄ້າ</label>
+                  <input class="form-control" type="text" value="" required name="​​p_name">
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">​ລາ​ຄາ​ສິນ​ຄ້າ</label>
+                  <input class="form-control" type="text" value="" required name="p_price">
+                </div>
+                <button type="submit" class="btn btn-primary form-control">ບັນທຶກ</button>
+                <hr>
+                <div class="d-flex flex-wrap justify-content-around">
+                <button type="reset" style="width: 150px;" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                <button onclick="history.back()" style="width: 150px;" class="btn btn-secondary">ກັບຄືນ</button>
+                </div>
+
+                <!-- <div class="container">
+                  <div class="row justify-content-sm-center">
+                    <div class="col-sm-auto" style="border: 1px solid;">
+                      <button type="reset" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                    </div>
+                    <div class="col-sm-auto"  style="border: 1px solid;">
+                      <button onclick="history.back()" class="btn btn-secondary">ກັບຄືນ</button>
+                    </div>
+                  </div>
+                </div> -->
+                  
+                  
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8" style="background-color: whitesmoke; padding-top: 10px;padding-right: 15px;border-radius: 5px;">
+          <table class="table table-sm table-hover table-responsive-sm table-responsive-md table-responsive-xl" id="Ratetable">
+            <thead class="text-white" style="background-color:rgb(12, 100, 154);">
+              <tr>
+                <th scope="col" style="width: 100px;">ລະ​ຫັດ​​ສິນ​ຄ້າ</th>
+                <th scope="col">​ຊື່ສິນ​ຄ້າ</th>
+                <th scope="col">​ລາ​ຄາ</th>
+                <th scope="col" style="width: 100px;">ຈຳນວນ</th>
+                <th scope="col" style="width: 50px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in sc_list %}
+              <tr>
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+                <td class="contribution">{{item[2]}} ₭</td> 
+                <td>{{item[3]}}</td>
+                <td><a href="#"><i class="bi bi-pencil-square" data-toggle="modal" data-target="#update_product/{{item[0]}}"></i></a>
+                <a href="#" onclick="deleteitem('{{item[0]}}')"><i class="bi bi-trash-fill" id="bitrash"></i></a></td>
+              </tr>
+                <div class="modal fade" id="update_product/{{item[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">ເເກ້ໄຂຂໍ້ມູນສິນ​ຄ້າ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="background-color: #EFEFEF;">
+
+                      <form action="/update_product/{{item[0]}}" method="post">
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">ລະ​ຫັດ​​ສິນ​ຄ້າ</label>
+                          <input class="form-control" type="text" required name="p_id" value="{{item[0]}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">ຊື່​​ສິນ​ຄ້າ</label>
+                          <input class="form-control" type="text" required name="p_name" value="{{item[1]}}">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">​ລາ​ຄາ​ສິນ​ຄ້າ</label>
+                          <input class="form-control" type="text" required name="p_price" value="{{item[2]}}">
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">ຍົກເລີກ</button>
+                          <button type="submit" id="" class="btn btn-primary">ບັນທຶກ</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal_Supplier-->
+<!-- <div class="modal fade" id="Modal_Supplier" tabindex="-1" aria-labelledby="Modal_SupplierLabel" aria-hidden="true"
+  style="background-color: rgba(0, 0, 0, 0.678);" data-backdrop="">
+  <div class="modal-dialog">
+    <div class="modal-content"
+      style="border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;width: 800px;border: 5px solid #fff;">
+      <div class="modal-header" style="background-color: #232629; color: #fff;">
+        <h5 class="modal-title" id="Modal_SupplierLabel">ເລືອກຜູ້ສະໜອງ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"
+        style="background-color: #EFEFEF;color: #fff;font-weight: 700;border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;">
+        <table class="table table-sm table-hover table-striped" id="Ratetable">
+          <thead class="" style="background-color: #232629;color: #fff;font-weight: 100;">
+            <tr>
+              <th scope="col" style="width:15%;font-size: 11pt;">ລະ​ຫັດ​ຜູ້​ສະ​ໜອງ</th>
+                <th scope="col" style="width:15%;font-size: 11pt;">ຊື່ຜູ້ສະໜອງ</th>
+                <th scope="col" style="width:20%;font-size: 11pt;">ທີ່ຢູ່</th>
+                <th scope="col" style="width:10%;font-size: 11pt;">ເບີໂທ</th>
+                <th scope="col" style="width:10%;font-size: 11pt;">ເລືອກ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in sp %}
+            <tr style="background-color: white;color: #444;">
+              <td style="text-align: center;font-size: 12pt;">{{item[0]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[1]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[2]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[3]}}</td>
+              <td>
+                <a href="#" class="select_pro" data-id="{{item[0]}}">
+                  <button type="button" class="btn btn-success"
+                    style="margin-top: -8px;margin-left: 30px;border-bottom: 4px solid #218838;border-radius: 12px;">
+                    <i class="bi bi-check-square" style="padding-right: 5px;font-size: 10pt;"></i>ເລືອກ
+                  </button>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<script>
+  function openmodal(input) {
+    $('#Modal_Supplier').modal('show');
+    $(".select_pro").unbind().click(function (event) {
+      $("input[id='sup_id']").val($(this).attr("data-id"));
+      $('#Modal_Supplier').modal('hide');
+    });
+  }
+
+//ເກັບ​ຄ່າ input ເມື່ອ refresh
+window.onload = function() {
+
+if (sessionStorage.getItem('member_nm') == "member_nm") {
+  return;
+}
+
+var sup_id = sessionStorage.getItem('sup_id');
+if (sup_id !== null) $('#sup_id').val(sup_id);
+}
+
+window.onbeforeunload = function() {
+sessionStorage.setItem("sup_id", $('#sup_id').val());
+}
+
+  function deleteitem(id) {
+    swal({
+      title: 'ທ່ານຕ້ອງການລົບຂໍ້ມູນແທ້ບໍ໋?',
+      text: "ທ່ານຈະບໍ່ສາມາດຮ້ອງຄືນຂໍ້ມູນນີ້ໃດ້!",
+      type: 'question',
+      showCancelButton: true,
+      cancelButtonColor: '#3085d6',
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'ເຈົ້າ, ແມ່ນແລ້ວ!',
+      cancelButtonText: 'ບໍ່,ກັບຄືນ!',
+    }).then(function () {
+      location.href = "/delete_product/" + id;
+    })
+  }
+</script>
+{% endblock %}

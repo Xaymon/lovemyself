@@ -1,0 +1,694 @@
+{% extends "layout/layout.html" %}
+{% block title %}ຮັບສິນ​ຄ້າ{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+  .dataTables_empty {
+    color: #000;
+  }
+
+  .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #007BFF;
+    color: white !important;
+    border: 2px solid #fff !important;
+    border-radius: 5px;
+    font-size: 13pt;
+  }
+
+  .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #0069D9;
+    color: white !important;
+    border: 2px solid #fff !important;
+    border-radius: 5px;
+  }
+
+  .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #444;
+    color: white !important;
+    border-radius: 5px;
+  }
+
+  div.dataTables_wrapper div.dataTables_filter input {
+    border-radius: 15px;
+    border: 3px solid #444;
+  }
+
+  div.dataTables_wrapper div.dataTables_filter label,
+  div.dataTables_wrapper div.dataTables_length label,
+  div.dataTables_wrapper div.dataTables_info,
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+    font-weight: 800;
+  }
+
+  tr.even {
+    background-color: #E7E9EB !important;
+  }
+
+  table.dataTable,
+  table.dataTable th,
+  table.dataTable td {
+    border: 1px solid rgba(68, 68, 68, 0.205);
+  }
+
+  table#insertdata,
+  table#insertdata th,
+  table#insertdata td {
+    border: 2px solid rgba(68, 68, 68, 0.205);
+  }
+
+  table#insertdata td {
+    font-size: 12pt;
+    color: #232629;
+    font-weight: 600;
+    background-color: #fff;
+  }
+
+  table#insertdata tbody tr:nth-child(even) {
+    background-color: #E7E9EB !important;
+  }
+
+</style>
+<body>
+<div class="col-sm" style="z-index: 5;position: absolute;">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <script>
+    $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+      $(".alert-dismissible").alert('close');
+    });
+  </script>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+</div>
+<!-- <br> -->
+<div class="container col-sm-11">
+  <div class="card">
+    <div class="card-body" style="margin-top: -10px;">
+      <div class="row">
+        <div class="col-sm"
+          style="padding-top: 10px;padding-right: 15px;box-shadow: 0px 0px 10px 1px #444;border-radius: 12px;width: 1080px;padding-left: 15px;">
+          <div class="card-header text-white"
+            style="font-weight: bold;background-color: rgb(12, 100, 154);border-top-left-radius: 14px;border-top-right-radius: 14px;text-align: center;">
+
+
+            <h5><i class="bi bi-box" style="padding-right: 5px;"></i>​ຮັບ​ສິນ​ຄ້າ</h5>
+
+          </div>
+          <!-- <form class="" action="/" method="post" style="font-weight: bold;" id="FormAll"> -->
+          <form class="" action="/save_recieve_by_order" method="post" style="font-weight: bold;" name="Form">
+          <!-- save and exit -->
+          <div class="row" style="width: 325px;font-weight: bold;border-radius: 14px;float: left;margin-left: 100px;margin-top: 15px;">
+            <!-- <input type="submit" class="btn btn-primary" id="btn" style="margin-top: -5px;margin-left: 30px;border-bottom: 4px solid #0069D9;border-radius: 12px;width: 100px;" value="ບັນທຶກ" onclick="clearInput()"/> -->
+            <input type="submit" class="btn btn-primary" id="btn" style="margin-top: -5px;margin-left: 30px;border-bottom: 4px solid #0069D9;border-radius: 12px;width: 100px;" value="ບັນທຶກ" onclick="Reset()"/>
+            <a href="/back_button_recieve_desc" onclick="Reset()" type="reset" class="btn btn-warning" style="margin-top: -5px;margin-left: 30px;border-bottom: 4px solid #E0A800;border-radius: 12px;width: 100px;">ຍົກເລີກ</a>
+          </div><br><br>
+          <!-- <form class="" action="/pick_save" method="post" style="font-weight: bold;" id="myForm"> -->
+
+          <div class="container my-3">
+            <div class="row justify-content-start">
+              <div class="col-1 text-end">
+                <label for="usr">ວັນທີ:</label>
+              </div>
+              <div class="col-3">
+                <input type="datetime" class="form-control form-control-sm" value="{{doc_date}}" name="rc_date"
+                  style="border: 2px solid #444;" readonly/>
+              </div>
+              <!-- <div class="col-2 text-end">
+                <label for="usr">ເວ​ລາ:</label>
+              </div>
+              <div class="col-3">
+                <input type="time" class="form-control form-control-sm" value="{{doc_time}}" name=""
+                  style="border: 2px solid #444;" readonly/>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="container my-3">
+            <div class="row justify-content-start">
+              <div class="col-1 text-end">
+                <label for="usr">ເລກທີ:</label>
+              </div>
+              <div class="col-3">
+                <input type="text" class="form-control form-control-sm" value="{{doc_no}}" name="rc_id" readonly
+                  style="border: 2px solid #444;" />
+              </div>
+            </div>
+          </div>
+
+          <div class="container my-3">
+            <div class="row justify-content-start">
+              <div class="col-1 text-end">
+                <label for="usr">ເລກທີສັ່ງ​ຊື້:</label>
+              </div>
+              <div class="col-3">
+                <input type="text" class="form-control form-control-sm" value="{{order[1]}}" name="order_id" readonly
+                  style="border: 2px solid #444;" />
+              </div>
+            </div>
+          </div>
+
+          <div class="container my-3" style="padding-left: 5px;">
+            <div class="row justify-content-start">
+              <div class="col-1 text-start" style="width: 120px;">
+                <label for="usr">ລະຫັດຜູ້ສະໜອງ:</label>
+              </div>
+              <div class="col-3">
+                <input type="text" class="form-control form-control-sm" value="" name="sup_id1" id="sup_id1" readonly
+                  style="border: 2px solid #444;" onclick="return openmodal_sp(this)" />
+              </div>
+                <input type="text" class="form-control form-control-sm" value="" name="sup_id" id="sup_id" readonly hidden
+                  style="border: 2px solid #444;" onclick="return openmodal_sp(this)" />
+
+              <div class="col-1" style="margin-left: -50px; margin-top: 3px;" >
+              <a href="#" onclick="return openmodal_sp(this);">
+                <button type="button" data-toggle="" data-target="" class="btn btn-primary btn-sm"
+                  style="margin-left: 28px;margin-top: -4px;margin-right: 20px;border-bottom: 4px solid #0069D9;border-radius: 12px;">
+                  <i class="bi bi-search" style="padding-right: 5px;font-size: 10pt;"></i>ເລືອກ
+                </button>
+              </a>
+              </div>
+
+              <div class="col-1 text-end" style="width: 120px; margin-left: 5%;">
+                <label for="usr">ຊື່ຜູ້ສະໜອງ:</label>
+              </div>
+              <div class="col-3">
+                <input type="text" class="form-control form-control-sm" value="" name="sup_name1" id="sup_name1" readonly
+                style="border: 2px solid #444;" onclick="return openmodal_sp(this)" />
+              </div>
+                <input type="text" class="form-control form-control-sm" value="" name="sup_name" id="sup_name" readonly hidden
+                style="border: 2px solid #444;" onclick="return openmodal_sp(this)" />
+              <div class="col-1" style="margin-left: -50px; margin-top: 3px;" >
+                <a href="#" onclick="return openmodal_sp(this);">
+                  <button type="button" data-toggle="" data-target="" class="btn btn-primary btn-sm"
+                    style="margin-left: 28px;margin-top: -4px;margin-right: 20px;border-bottom: 4px solid #0069D9;border-radius: 12px;">
+                    <i class="bi bi-search" style="padding-right: 5px;font-size: 10pt;"></i>ເລືອກ
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="container my-3" style="padding-left: 5px;">
+            <div class="row justify-content-start">
+              <div class="col-1 text-end" style="width: 120px;">
+                <label for="usr">ໝາຍເຫດ:</label>
+              </div>
+              <div class="col-7">
+                <textarea type="text" class="form-control form-control-sm" value="" name="remark1" id="remark1" onkeyup="remark()"
+                  style="border: 2px solid #444;"></textarea>
+              </div>
+                <textarea type="text" class="form-control form-control-sm" value="" name="remark" id="remark" hidden
+                  style="border: 2px solid #444;"></textarea>
+            </div>
+          </div>
+        </form>
+
+          <hr style="width: 90%;margin-bottom: 30px;margin-top: -5px;">
+          <form action="/save_recieve_by_order_detail" method="post" id="Form2">
+            <div class="row" style="justify-content: center;">
+              <div class="container my-3">
+                <div class="row justify-content-start">
+                  <div class="col-1 text-end">
+                    <a href="#" onclick="openmodal(this);">
+                      <button type="button" data-toggle="" data-target="" class="btn btn-primary btn-sm"
+                        style="margin-top: -8px;margin-right: 20px;border-bottom: 4px solid #0069D9;border-radius: 12px;">
+                        <i class="bi bi-search" style="padding-right: 5px;font-size: 10pt;"></i>ເລືອກສິນຄ້າ
+                      </button>
+                    </a>
+                  </div>
+                  <div class="col-1 text-end">
+                    <label for="usr">ລະຫັດສິນຄ້າ:</label>
+                  </div>
+                  <div class="col-1">
+                    <input type="text" class="form-control form-control-sm" value="" readonly name="p_id" id="p_id"
+                    required style="border: 2px solid #444;font-weight: bold;width: 100px;"  onchange="shownhide(this)" onclick="openmodal(this)"/>
+                  </div>
+                  <div class="col-1 text-end">
+                    <label for="usr">ຊື່ສິນຄ້າ:</label>
+                  </div>
+                  <div class="col-3">
+                    <input type="text" class="form-control form-control-sm" name="name_1" id="name_1" value="" readonly
+                    style="border: 2px solid #444;font-weight: bold;" onclick="openmodal(this)">
+                  </div>
+                  <div class="col-1 text-end">
+                    <label for="usr">ຈຳນວນ:</label>
+                  </div>
+                  <div class="col-1">
+                    <input type="number" class="form-control form-control-sm" name="rc_qty" id="rc_qty" oninput="myFunction()" required
+                    style="border: 2px solid #444;font-weight: bold;text-align: right;" min="1">
+                  </div>
+                  <div class="col-1 text-end">
+                    <label for="usr">ລາ​ຄາລວ​ມ:</label>
+                  </div>
+                  <div class="col-1 text-end">
+                    <input type="text" class="form-control form-control-sm" name="unit" id="unit_code" value=""
+                    style="border: 2px solid #444;font-weight: bold;" readonly hidden onclick="openmodal(this)"/>
+                    <input type="text" class="form-control form-control-sm" name="rc_price" id="rc_price" value=""
+                    style="border: 2px solid #444;font-weight: bold;" readonly onclick="openmodal(this)"/>
+                  </div>
+                  
+                  <div class="col-1">
+                    <!-- <button type="button" onclick="myFunction()" class="btn btn-success btn-sm">ເພີ່ມ</button> -->
+                    <!-- <a href="/save_order_detail" type="button" class="btn btn-success btn-sm" style="border-bottom: 4px solid darkgreen;border-radius: 12px;width: 50px;">ເພີ່ມ</a> -->
+                    <button type="submit" class="btn btn-success btn-sm" id="add">ເພີ່ມ</button>
+                  </div>
+                  <div class="col-3">
+                    <input type="text" class="form-control form-control-sm" value="{{sp[0]}}" name="sup_id" id="sup_id" hidden
+                    style="border: 2px solid #444;"/>
+                  </div>
+                  <div class="col-3">
+                    <input type="text" class="form-control form-control-sm" value="{{doc_no}}" name="rc_id" hidden
+                      style="border: 2px solid #444;" />
+                  </div>
+                  <div class="col-3">
+                    <input type="text" class="form-control form-control-sm" value="{{order[1]}}" name="order_id" hidden readonly
+                      style="border: 2px solid #444;" />
+                  </div>
+                </div>
+              </div>
+            </div>
+              <!-- <a href="#" onclick="insertdataTB()">
+                <button type="button" class="btn btn-success"
+                  style="margin-top: -8px;margin-left: 30px;border-bottom: 4px solid #218838;border-radius: 12px;">
+                  <i class="bi bi-plus-square" style="padding-right: 5px;font-size: 10pt;"></i>ເພີ່ມ
+                </button>
+              </a> -->
+          </form>
+        <!-- </form> -->
+        </div>
+
+        <table class="table table-sm table-hover table-striped" id="insertdata">
+          <thead class="" style="background-color: rgb(12, 100, 154);color: #fff;font-weight: 100;">
+            <tr>
+              <th scope="col" style="width:3%;font-size: 13pt;">NO</th>
+              <th scope="col" style="width:12%;font-size: 13pt;">ລະຫັດສິນຄ້າ</th>
+              <th scope="col" style="width:40%;font-size: 13pt;">ຊື່ສິນຄ້າ</th>
+              <th scope="col" style="width:10%;font-size: 13pt;">ຈຳນວນ</th>
+              <th scope="col" style="width:10%;font-size: 13pt;">ລາ​ຄາ</th>
+              <th scope="col" style="width:10%;font-size: 13pt;">ລາ​ຄາລວມ</th>
+              <th scope="col" style="width:3%;font-size: 13pt;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in detail_list %}
+            <tr style="background-color: white;">
+              <td id="code_pro">{{item[0]}}</td>
+              <td style="text-align: center;" id="name_pro">{{item[1]}}</td>
+              <td style="text-align: left;" id="qty_pro">{{item[2]}}</td>
+              <td style="text-align: center;">{{item[3]}}</td>
+              <td style="text-align: center;" id="unit_pro">{{item[4]}} ₭</td>
+              <td style="text-align: center;" id="unit_pro">{{item[5]}} ₭</td>
+              <td>
+                <a href="#" style="border-radius: 5px;text-decoration: none;" onclick="deleteitem('{{item[1]}}')"
+                  id="icon_del">
+                  <i class="bi bi-trash-fill" id="bitrash"
+                    style="color: #DD4832;margin: 5px;margin-bottom: -10px;font-size: 19px;"></i>
+                </a>
+              </td>
+            </tr>
+            
+            {% endfor %}
+            {% for item in sum_amount %}
+            <tr style="background-color: #DEDEDF;border: 1px solid #232629">
+              <td colspan="5"
+                style="text-align: right;font-size: 14pt;font-weight: bold;border-right: 1px solid #232629">
+                ລວມທັງໝົດ:&nbsp;&nbsp;</td>
+              <td colspan="1" style="text-align: center;font-size: 14pt;font-weight: bold;color: #00bd1f;" id="sumval">{{item[0]}} ₭</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <div class="card-footer"
+        style="width: 325px;font-weight: bold;border-radius: 14px;float: left;margin-left: 85px;">
+        <button type="submit" id="" class="btn btn-primary"
+          style="margin-top: -5px;margin-left: 30px;border-bottom: 4px solid #0069D9;border-radius: 12px;width: 100px;">ບັນທຶກ</button>
+        <a href="/cc_pick"><button type="reset" class="btn btn-warning"
+            style="margin-top: -5px;margin-left: 30px;border-bottom: 4px solid #E0A800;border-radius: 12px;width: 100px;">ຍົກເລີກ</button></a>
+      </div> -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ModalListProduct-->
+<div class="modal fade" id="Modal_listpro" tabindex="-1" aria-labelledby="Modal_listproLabel" aria-hidden="true"
+  style="background-color: rgba(0, 0, 0, 0.678);" data-backdrop="">
+  <div class="modal-dialog">
+    <div class="modal-content"
+      style="border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;width: 800px;border: 5px solid #fff;">
+      <div class="modal-header" style="background-color: #232629; color: #fff;">
+        <h5 class="modal-title" id="Modal_listproLabel">ເລືອກສິນຄ້າ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"
+        style="background-color: #EFEFEF;color: #fff;font-weight: 700;border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;">
+        <table class="table table-sm table-hover table-striped" id="Ratetable">
+          <thead class="" style="background-color: #232629;color: #fff;font-weight: 100;">
+            <tr>
+              <th scope="col" style="width:20%;font-size: 11pt;">ລະຫັດສິນຄ້າ</th>
+              <th scope="col" style="width:25%;font-size: 11pt;">ຊື່ສິນຄ້າ</th>
+              <th scope="col" style="width:15%;font-size: 11pt;">ຫົວໜ່ວຍ</th>
+              <th scope="col" style="width:8%;font-size: 11pt;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in pro_list %}
+            <tr style="background-color: white;color: #444;">
+              <td style="text-align: center;font-size: 12pt;">{{item[0]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[1]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[2]}}</td>
+              <td>
+                <a href="#" class="select_pro" data-id_c="{{item[0]}}" data-id_n="{{item[1]}}" data-id_u="{{item[2]}}"
+                  value="{{item[3]}}">
+                  <button type="button" class="btn btn-success"
+                    style="margin-top: -8px;margin-left: 30px;border-bottom: 4px solid #218838;border-radius: 12px;">
+                    <i class="bi bi-check-square" style="padding-right: 5px;font-size: 10pt;"></i>ເລືອກ
+                  </button>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal_Supplier-->
+<div class="modal fade" id="Modal_sp" tabindex="-1" aria-labelledby="Modal_spLabel" aria-hidden="true"
+  style="background-color: rgba(0, 0, 0, 0.678);" data-backdrop="">
+  <div class="modal-dialog">
+    <div class="modal-content"
+      style="border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;width: 800px;border: 5px solid #fff;">
+      <div class="modal-header" style="background-color: #232629; color: #fff;">
+        <h5 class="modal-title" id="Modal_spLabel">ເລືອກຜູ້ສະໜອງ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"
+        style="background-color: #EFEFEF;color: #fff;font-weight: 700;border-bottom-left-radius: 14px;border-bottom-right-radius: 14px;">
+
+        <div class="row my-3" style="justify-content: flex-end;margin-bottom: -5px;">
+            <div class="col-1 text-end">
+              <label for="usr" style="font-weight: bold;color: #232629;">ຄົ້ນຫາ:</label>
+            </div>
+            <div class="col-3">
+              <input id="myInput_sp" type="text" placeholder="" style="border-radius: 15px; border: 3px solid #444;">
+            </div>
+        </div>
+
+        <table class="table table-sm table-hover table-striped" id="Ratetable">
+          <thead class="" style="background-color: #232629;color: #fff;font-weight: 100;">
+            <tr>
+              <th scope="col" style="width:20%;font-size: 11pt;">ລະຫັດຜູ້ສະໜອງ</th>
+              <th scope="col" style="width:25%;font-size: 11pt;">ຊື່ຜູ້ສະໜອງ</th>
+              <th scope="col" style="width:15%;font-size: 11pt;">ທີ່ຢູ່</th>
+              <th scope="col" style="width:20%;font-size: 11pt;">ເບີໂທ</th>
+              <th scope="col" style="width:8%;font-size: 11pt;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="myTable_ap">
+            {% for item in sp %}
+            <tr style="background-color: white;color: #444;">
+              <td style="text-align: center;font-size: 12pt;">{{item[0]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[1]}}</td>
+              <td style="text-align: center;font-size: 10pt;">{{item[2]}}</td>
+              <td style="text-align: center;font-size: 12pt;">{{item[3]}}</td>
+              <td>
+                <a href="#" class="hello" data-id="{{item[1]}}" data-id1="{{item[1]}}" data-id_code="{{item[0]}}" data-id_code1="{{item[0]}}">
+                  <button type="button" class="btn btn-success"
+                    style="margin-top: -8px;margin-left: 30px;border-bottom: 4px solid #218838;border-radius: 12px;">
+                    <i class="bi bi-check-square" style="padding-right: 5px;font-size: 10pt;"></i>ເລືອກ
+                  </button>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- javascript -->
+<script>
+//ເຊື່ອງ div && button
+  document.getElementById("rc_qty").readOnly = true;
+  document.getElementById('add').style.display = 'none';
+// alert ເວລາກົດປຸ່ມລົບ
+  function deleteitem(id) {
+    swal({
+      title: 'ທ່ານຕ້ອງການລົບຂໍ້ມູນແທ້ບໍ໋?',
+      text: "ທ່ານຈະບໍ່ສາມາດຮ້ອງຄືນຂໍ້ມູນນີ້ໃດ້!",
+      type: 'question',
+      showCancelButton: true,
+      cancelButtonColor: '#3085d6',
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'ເຈົ້າ, ແມ່ນແລ້ວ!',
+      cancelButtonText: 'ບໍ່,ກັບຄືນ!',
+    }).then(function () {
+      location.href = "/delete_recieve_by_order_detail/" + id;
+    })
+  }
+// ສະເເດງmodalເມື່ອກົດເລືອກ product ເເລ້ວວາງຄ່າລົງ input ຂອງ product
+  function openmodal(input) {
+    $('#Modal_listpro').modal('show');
+    $(".select_pro").unbind().click(function (event) {
+      $("input[id='p_id']").val($(this).attr("data-id_c"));
+      $("input[id='name_1']").val($(this).attr("data-id_n"));
+      $("input[id='unit_code']").val($(this).attr("data-id_u")) == this.value;
+      $('#Modal_listpro').modal('hide');
+      document.getElementById("rc_qty").readOnly = false;
+      document.getElementById('add').style.display = 'block';
+    });
+  }
+  // modal ຜູ້ສະໜອງ
+  function openmodal_sp(input) {
+    $('#Modal_sp').modal('show');
+    $(".hello").unbind().click(function (event) {
+
+      $("input[id='sup_id']").val($(this).attr("data-id_code"));
+      $("input[id='sup_id1']").val($(this).attr("data-id_code1"));
+      $("input[id='sup_name']").val($(this).attr("data-id"));
+      $("input[id='sup_name1']").val($(this).attr("data-id1"));
+         $('#Modal_sp').modal('hide');
+     });
+   }
+// ສະເເດງmodalເມື່ອກົດເລືອກ ap ເເລ້ວວາງຄ່າລົງ input ຂອງ supplier
+  // function openmodal_sp(input) {
+  //   $('#Modal_sp').modal('show');
+  //   $(".hello").unbind().click(function (event) {
+
+  //     $("input[id='sup_id']").val($(this).attr("data-id_code"));
+  //     $("input[id='sup_name']").val($(this).attr("data-id"));
+  //        $('#Modal_sp').modal('hide');
+  //    });
+  //  }
+
+
+//ຄົ້ນຫາ supplier
+  $(document).ready(function () {
+    $("#myInput_sp").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#myTable_sp tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+// submit form
+  // submitForms = function(){
+  //   document.getElementById("Form1").submit();
+  //   document.getElementById("Form2").submit();
+  // }
+// alert ເມື່ອ ບໍ່ໄດ້ເລືອກສິນຄ້າ
+  // function alert() {
+  //   const input = document.getElementById('p_id');
+  //   if (input.value === "") {
+  //     alert("ກະລຸນາເລືອກສິນຄ້າ"); // This will prevent the Form from submitting
+  //     return false;
+  //   } else {
+  //     return true; // this will submit the form and handle the control to php.
+  //   }
+  // }
+
+  //ເກັບ​ຄ່າ input ເມື່ອ refresh
+// window.onload = function() {
+
+// if (sessionStorage.getItem('member_nm') == "member_nm") {
+//   return;
+// }
+
+// var sup_id = sessionStorage.getItem('sup_id');
+// if (sup_id !== null) $('#sup_id').val(sup_id);
+
+// var sup_name = sessionStorage.getItem('sup_name');
+// if (sup_name !== null) $('#sup_name').val(sup_name);
+
+// var remark = sessionStorage.getItem('remark');
+// if (remark !== null) $('#remark').val(remark);
+// }
+
+// window.onbeforeunload = function() {
+// sessionStorage.setItem("sup_id", $('#sup_id').val());
+// sessionStorage.setItem("sup_name", $('#sup_name').val());
+// sessionStorage.setItem("remark", $('#remark').val());
+// }
+//test
+window.onload = function() {
+
+if (sessionStorage.getItem('member_nm') == "member_nm") {
+  return;
+}
+
+var sup_id = sessionStorage.getItem('sup_id');
+if (sup_id !== null) $('#sup_id').val(sup_id);
+
+var sup_id1 = sessionStorage.getItem('sup_id1');
+if (sup_id1 !== null) $('#sup_id1').val(sup_id1);
+
+var sup_name = sessionStorage.getItem('sup_name');
+if (sup_name !== null) $('#sup_name').val(sup_name);
+
+var sup_name1 = sessionStorage.getItem('sup_name1');
+if (sup_name1 !== null) $('#sup_name1').val(sup_name1);
+
+var remark = sessionStorage.getItem('remark');
+if (remark !== null) $('#remark').val(remark);
+
+var remark1 = sessionStorage.getItem('remark1');
+if (remark1 !== null) $('#remark1').val(remark1);
+}
+
+window.onbeforeunload = function() {
+sessionStorage.setItem("sup_id", $('#sup_id').val());
+sessionStorage.setItem("sup_id1", $('#sup_id1').val());
+sessionStorage.setItem("sup_name", $('#sup_name').val());
+sessionStorage.setItem("sup_name1", $('#sup_name1').val());
+sessionStorage.setItem("remark1", $('#remark1').val());
+sessionStorage.setItem("remark", $('#remark').val());
+}
+
+/////YYYYYYYYYY
+// window.onload = function() {
+
+// // If sessionStorage is storing default values (ex. name), exit the function and do not restore data
+// // if (sessionStorage.getItem('code_pt') == "code_pt") {
+// //     return;
+// // }
+
+// // If values are not blank, restore them to the fields
+// var code = sessionStorage.getItem('code');
+// if (code !== null) $('#sup_id').val(code);
+
+// var name = sessionStorage.getItem('name');
+// if (name !== null) $('#sup_name').val(name);
+
+// var codedt = sessionStorage.getItem('codedt');
+// if (codedt !== null) $('#remark').val(codedt);
+
+// var namedt = sessionStorage.getItem('namedt');
+// if (namedt !== null) $('#name_dt').val(namedt);
+
+// var emp = sessionStorage.getItem('emp');
+// if (emp !== null) $('#code_emp').val(emp);
+
+// var bbb = sessionStorage.getItem('bbb');
+// if (bbb !== null) $('#bbb').val(bbb);
+// }
+
+// // Before refreshing the page, save the form data to sessionStorage
+// window.onbeforeunload = function() {
+// sessionStorage.setItem("code", $('#sup_id').val());
+// sessionStorage.setItem("name", $('#sup_name').val());
+// sessionStorage.setItem("codedt", $('#remark').val());
+// sessionStorage.setItem("namedt", $('#name_dt').val());
+// sessionStorage.setItem("emp", $('#code_emp').val());
+// sessionStorage.setItem("bbb", $('#bbb').val());
+// }
+//////YYYYYYYY
+
+
+    $("#remark1").keyup(function () {
+    var value = $(this).val();
+    $("#remark").val(value);
+    }).keyup();
+
+// function remark() {
+//   $("#remark1").val($("#remark").val()); 
+// }
+
+// ເມື່ອ​ກົດ​ປຸ່ມ​ຍົກ​ເລີກ​ໃຫ້​ລ້າງ​ຄ່າ​ຢູ່ input
+function Reset()
+{
+  document.getElementById("sup_id1").value = "";
+  document.getElementById("sup_name1").value = "";
+  document.getElementById("remark1").value = "";
+}
+
+var textboxVal; // Will make textboxVal accesible on all subsequent code
+function closeModal() {
+  textboxVal = document.getElementById('textboxId').value;
+  $('#Modal_listpro').modal('hide');
+  openOtherModal();
+}
+
+function myFunction() {
+        var qty = document.getElementById("rc_qty").value;
+        var a = document.getElementById("unit_code").value;
+        var total = qty * a;
+        document.getElementById("rc_price").value = Math.round(total);
+         
+    }
+
+// function myFunction() {
+//   var table = document.getElementById("insertdata");
+//   var row = table.insertRow(1);
+//   var cell1 = row.insertCell(0);
+//   var cell2 = row.insertCell(1);
+//   var cell3 = row.insertCell(2);
+//   var cell4 = row.insertCell(3);
+//   var cell5 = row.insertCell(4);
+//   cell2.innerHTML = document.getElementById("p_id").value;
+//   cell3.innerHTML = "NULL";
+//   cell4.innerHTML = document.getElementById("order_qty").value;
+//   cell5.innerHTML = "NULL";
+// }
+
+//   const btn = document.getElementById('btn');
+
+// btn.addEventListener('click', function handleClick(event) {
+//   // 👇️ if you are submitting a form (prevents page reload)
+//   event.preventDefault();
+
+//   const id = document.getElementById('sup_id');
+//   const name = document.getElementById('sup_name');
+//   const remark = document.getElementById('remark');
+
+//   // 👇️ clear input field
+//   id.value = '';
+//   name.value = '';
+//   remark.value = '';
+// });
+
+</script>
+</body>
+{% endblock %}

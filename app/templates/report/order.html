@@ -1,0 +1,133 @@
+{% extends "layout/layout.html" %}
+{% block title %}ລາຍງານການສັ່ງ​ຊື້​ສິນ​ຄ້າ{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+  @media print{
+            .a {
+                display: none;
+            }
+           head{
+                display: none;
+            }
+            .navbar{
+                display: none;
+            }
+            .sectiom{
+                display: none;
+            }
+        }
+</style>
+<br>
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-header noPrint">
+      ລາຍງານ​ການ​ສັ່ງ​ຊື້​ສິນ​ຄ້າ
+    </div>
+    <div class="card-body">
+      <form action="/order_rp_date" method="post">
+        <div class="container">
+          <div class="row noPrint">
+            <div class="col-sm-3">
+              <input type="date" class="form-control form-control-sm noPrint" name="from_date" id="from_date" value="{{from_date}}">
+            </div>
+            -
+            <div class="col-sm-3">
+              <input type="date" class="form-control form-control-sm noPrint" name="to_date" id="" value="{{to_date}}">
+            </div>
+            <div class="col-sm-2">
+              <button id="search" type="submit" class="btn btn-primary btn-sm btn-block noPrint">ຄົ້ນຫາ</button>
+            </div>
+            <div class="col-sm-2">
+              <button onclick="window.print();return false;" 
+              style="background-color: whitesmoke; border: black 4px solid; border-radius: 50px;width: 100px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" 
+              class="noPrint btn btn-sm btn-block">Print</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr>
+      <center><h3>ລາຍງານ​ການ​ສັ່ງ​ຊື້​ສິນ​ຄ້າ
+        {% for item in reportone %}
+        ປະ​ຈຳ​ເດືອນ {{item[0]}}
+        {% endfor %}
+        {% for item in reporttwo %}
+        ວັນ​ທີ {{item[0]}}
+        {% endfor %}
+      </h3></center>
+
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">ລ/​ດ</th>
+            <th scope="col">ວັນ/ເວລາ</th>
+            <th scope="col">ເລກທີເອກະສານ</th>
+            <th scope="col">ລະ​ຫັດ​ຜູ້​ສະ​ໜອງ</th>
+            <th scope="col">​ຊື່​ຜູ້​ສະ​ໜອງ</th>
+            <th scope="col">ລຳ​ດັບ ລາຍ​ການ</th>
+            <th scope="col">ລະ​ຫັດ​ສິນ​ຄ້າ</th>
+            <th scope="col">ຈຳ​ນວນ</th>
+            <th scope="col">​ລວມ​ຈຳ​ນວນ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in report %}
+          <tr>
+            {% if item[2] is not none %}
+            <td rowspan="{{item[10]}}" style="text-align: center;vertical-align:middle;">{{item[0]}}</td>
+            {% else %}
+
+            {% endif %}
+            {% if item[2] is not none %}
+            <td rowspan="{{item[10]}}" style="text-align: center;vertical-align:middle;">{{item[2]}}</td>
+            {% else %}
+
+            {% endif %}
+
+            {% if item[3] is not none %}
+            <td rowspan="{{item[10]}}" style="text-align: center;vertical-align:middle;">{{item[3]}}</td>
+            {% else %}
+
+            {% endif %}
+
+            {% if item[4] is not none %}
+            <td rowspan="{{item[10]}}" style="text-align: right;vertical-align:middle;">{{item[4]}}</td>
+            {% else %}
+            
+            {% endif %}
+
+            {% if item[5] is not none %}
+            <td rowspan="{{item[10]}}" style="text-align: right;vertical-align:middle;">{{item[5]}}</td>
+            {% else %}
+            
+            {% endif %}
+            <td style="text-align: right;">{{item[1]}}</td>
+            <td style="text-align: right;">{{item[6]}}</td>
+            <!-- <td style="text-align: right;">{{item[7]}}</td> -->
+            <td style="text-align: right;">{{item[8]}}</td>
+            {% if item[10] == 1 %}
+            <td style="text-align: right;">{{item[9]}}</td>
+            {% elif item[10] == 0  %}
+            
+            {% else %}
+            <td class="contribution" rowspan="{{item[10]}}" style="text-align: right;vertical-align:middle;">{{item[9]}}</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+          {% for item in total %}
+            <tr style="background-color: #DEDEDF;border: 1px solid #232629">
+              <td colspan="7"
+                style="text-align: right;font-size: 14pt;font-weight: bold;border-right: 1px solid #232629">
+                ລວມທັງໝົດ:&nbsp;&nbsp;</td>
+              <td colspan="2" style="text-align: center;font-size: 14pt;font-weight: bold;color: #00bd1f;" id="sumval">{{item[0]}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

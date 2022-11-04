@@ -1,114 +1,458 @@
-<link
-  href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  rel="stylesheet"
-  id="bootstrap-css"
-/>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sign in</title>
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+{% extends "layout/layout.html" %}
+{% block title %}ໜ້າຫຼັກ-{{roles}}-{{user}}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Orbitron');
+    p.m-0{
+        font-size: 18px;
+    }
 
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  {% for message in messages %}
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>{{ message }}</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <script>
-    $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
-      $(".alert-dismissible").alert('close');
-    });
-  </script>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
-
-<!-- <div class="background-wrap">
-    <div class="background"></div>
-  </div>
-  
-<div class="container-fluid">
-  <div class="row mt-5 mr-2 ml-2" style="border: 5px solid #000;background-color: #8D008F;border-radius: 8px;">
-    <img src="{{ url_for('static',filename='images/brand_logo.jpg') }}" alt="" width="40%">
-    <div class="container-fluid col-sm-5">
-      <form id="accesspanel" action="/login" method="post">
-        <h1 id="litheader">KT Dental</h1>
-        <div class="inset">
-          <p>
-            <input type="text" name="username" id="email" placeholder="ຊື່ຜູ້ໃຊ້" required autocomplete="off">
-          </p>
-          <p>
-            <input type="password" name="password" id="password" placeholder="ລະຫັດຜ່ານ" required autocomplete="off">
-          </p>
-        </div>
-        <p class="p-container">
-          <input type="submit" class="fadeIn fourth" id="log_in" value="Log In" onclick="textneon()">
-        </p>
-      </form>
-    </div>
-  </div>
-</div> -->
-
-<!-- video -->
-<video autoplay muted loop id="myVideo">
-  <source src="{{ url_for('static',filename='video/bgm_login.mp4') }}" type="video/mp4">
-</video>
-
+    #clock {
+        font-family: 'Orbitron', sans-serif;
+        color: darkblue;
+        font-size: 1vw;
+        text-align: center;
+        /* padding-top: 3%; */
+        vertical-align: baseline;
+        /* padding-bottom: 2%; */
+    }
+    
+</style>
+<br>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-1"></div>
-
-  <div class="col-sm-10" id="bgDark">
-    <div class="col-sm-12 text-light text-center">
-      <h3 class="mt-3">Purchase EXO - 8 Anniv. Theme</h3>
+    <div class="card"><div id="clock"></div></div>
+</div>
+{% if roles == 'user' and svc[0] !=0 %}
+<br>
+<center><div class="col-xl-3 col-md-12 col-sm-12">
+    <div class="card text-light mb-3" style="background-color: #e65100;">
+        <div class="card-body" style="background-color: #e65100;">
+            <p class="m-0">ລາຍ​ການ​ທີ່​ຍັງ​ບໍ່​ສຳ​ເລັດ <b>{{svc[0]}}</b> <small class="fs-5">ລາຍການ</small></p>
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+            <a href="/user_servicing" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+        </div>
     </div>
-
-    <!-- <div class="col-sm-12 text-light text-center">
-      <h5 class="mt-3">Baby Don't Cry</h5>
+</div>
+</center>
+{% endif %}
+<div class="container">
+    <!-- <div class="card" style="background-color: whitesmoke;">
+        <div class="card-body">
+            <div class="container">
+                <center>
+                    <div class="row" style="color:mediumblue;">
+                        <h1>ຮ້ານ​ສະ​ດວກ​ຊັກ</h1><br><h2>ຊັກ • ອົບ​ແຫ້ງ ບໍ​ລິ​ການ​ດ້ວຍ​ຕົນ​ເອງ</h2>
+                    </div>
+                </center>
+            </div>
+        </div>
     </div> -->
-    <div class="col-sm-12" style=""></div>
-    <div class="col-sm-12 d-flex justify-content-center" style="height: 100px;">
-      <img src="{{ url_for('static',filename='images/Packagestore_exo.png') }}" alt="" width="150" height="300">
-    </div>
+    <div class="card">
+        <div class="card-body" style="background-color: whitesmoke;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 col-md-12 mb-1">
+                        <div class="card"  style="background-color: whitesmoke;">
+                            <!-- <img src="https://scontent.fvte5-1.fna.fbcdn.net/v/t1.6435-9/91942850_105182024475438_3016207437213466624_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeF9jrL3JlFqSGU6cv_hP08V3AFt-8uasgHcAW37y5qyARuqPdhziKTdR2iuXYAEQQRU9XlifERfXtEcB2Wy53dD&_nc_ohc=FS6-W4EEx0cAX9myym8&_nc_ht=scontent.fvte5-1.fna&oh=00_AT_GeqktsaHrYM8g_ZJpywmG132dTWuCsopSPcZpXo1yIw&oe=62C84626" alt=""> -->
+                            {% if roles == 'user' %}
+                            <img src="{{url_for('static',filename='images/index.jpg')}}" alt="">
+                            {% endif %}
 
-    <div class="col-sm-12">
-      <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4 d-flex justify-content-end">
-          <!-- <a href="">
-            <button class="btn" style="background-color: #EA027D;color: #fff;width: 200px;font-size: 14pt;height: 50px;" id="lgin">
-              Purchase
-            </button>
-          </a> -->
-        </div>
-        <div class="col-sm-4">
-        </div>
-      </div>
-    </div>
-  </div>
+                            {% if roles == 'admin' %}
+                            <div class="row" style="padding: 10px;padding-bottom: 0;">
+                                <center>
+                                    <h2 style="color:mediumblue;">ສະຫຼຸບ​ຂໍ້​ມູນ​ປະ​ຈຳ​ເດືອນ {{month[0]}}</h2> 
+                                </center>
 
-  <div class="col-sm-1"></div>
-  </div>
+                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                    <div class="card text-light mb-3" style="background-color:lightslategray;">
+                                        <div class="card-body" style="height: 150px;background-color:lightslategray;">
+                                            <p class="m-0"> ຈຳ​ນວນ​ລູກ​ຄ້າ </p>
+                                                <div class="row text-center" style="text-align: right;">
+                                                    <i class="fas fa-box fa-3x text-gray-500"></i>
+                                                    <h2 class="mt-2 fw-bold text-light font-eng">{{cust[0]}}<small class="fs-5"> ຄົນ</small></h2>
+                                                </div>
+
+                                                    <div class="d-flex">
+                                                      <div class="col-sm-6 text-start">
+                                                        <h6 class="mt-4 fw-bold text-light font-eng">ຊາຍ: {{cust[1]}}</h6>
+                                                      </div>
+                                                      <div class="col-sm-6 text-end">
+                                                        <h6 class="mt-4 fw-bold text-light font-eng">ຍິງ: {{cust[2]}}</h6>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/customer_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                            <!-- <div class="small text-light">
+                                                <i class="fas fa-arrow-circle-right"></i>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                    <div class="card text-light mb-3" style="background-color:lightslategray;">
+                                        <div class="card-body" style="height: 150px;background-color:lightslategray;">
+                                            <p class="m-0"> ຈຳ​ນວນ​ພະ​ນັກ​ງານ </p>
+                                                <div class="row text-center" style="text-align: right;">
+                                                    <i class="fas fa-box fa-3x text-gray-500"></i>
+                                                    <h2 class="mt-2 fw-bold text-light font-eng">{{emp[0]}}<small class="fs-5"> ຄົນ</small></h2>
+                                                </div>
+
+                                                    <div class="d-flex">
+                                                      <div class="col-sm-6 text-start">
+                                                        <h6 class="mt-4 fw-bold text-light font-eng">ຊາຍ: {{emp[1]}}</h6>
+                                                      </div>
+                                                      <div class="col-sm-6 text-end">
+                                                        <h6 class="mt-4 fw-bold text-light font-eng">ຍິງ: {{emp[2]}}</h6>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/employee_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                            <!-- <div class="small text-light">
+                                                <i class="fas fa-arrow-circle-right"></i>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-xl-3 col-md-6">
+                                    <div class="card text-light mb-3" style="background-color:lightslategray;">
+                                        <div class="card-body" style="height: 150px;background-color:lightslategray;">
+                                            <p class="m-0"> ຈຳ​ນວນ​ພະ​ນັກ​ງານ </p>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="row" style="text-align: right;">
+                                                    <i class="fas fa-box fa-3x text-gray-500"></i>
+                                                    <h2 class="mt-2 fw-bold text-light font-eng">{{emp[0]}}<small class="fs-5"> ຄົນ</small></h2>
+                                                </div>
+                                                <div class="row" style="text-align: center;">
+                                                    <div class="card-text text-end" style="background-color:lightslategray;">
+                                                        <h6 class="mt-2 fw-bold text-light font-eng">ຊາຍ: {{emp[1]}}</h6>
+                                                    </div>
+    
+                                                    <div class="card-text text-end" style="background-color:lightslategray;">
+                                                        <h6 class="mt-2 fw-bold text-light font-eng">ຍິງ: {{emp[2]}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/employee_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                        
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card text-light mb-3" style="background-color: darkorange;">
+                                        <div class="card-body" style="background-color: darkorange;">
+                                            <p class="m-0">ຍອດການບໍ​ລິ​ການ</p>
+                                            <div style="text-align: center;">
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{sv[0]}}<br><small class="fs-5">ລາຍການ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/service_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card text-light mb-3" style="background-color: #e65100;">
+                                        <div class="card-body" style="background-color: #e65100;">
+                                            <p class="m-0">ລາຍ​ການ​ທີ່​ຍັງ​ຄົງ​ຄ້າງ</p>
+                                            <div style="text-align: center;">
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{svc[0]}}<br><small class="fs-5">ລາຍການ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/home_servicing" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-6 col-md-6">
+                                    <div class="card bg-success text-light mb-3">
+                                        <div class="card-body bg-success" style="height: 150px;">
+                                            <p class="m-0">ລາຍ​ຮັບ</p>
+                                            <div style="text-align: center;">
+                                                <br>
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{income[0]}}<small class="fs-5"> ກີບ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a  href="/income_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-xl-6 col-md-6">
+                                    <div class="card bg-danger text-light mb-3">
+                                        <div class="card-body bg-danger" style="height: 150px;">
+                                            <p class="m-0">​ລາຍ​ຈ່າຍ​</p>
+                                            <div style="text-align: center;">
+                                                <br>
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{outcome[0]}}<small class="fs-5"> ກີບ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/outcome_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card text-light mb-3" style="background-color:#7490f3;">
+                                        <div class="card-body" style="height: 150px;background-color:#7490f3;">
+                                            <p class="m-0">ລາຍ​ການ​ສັ່ງ​ຊື້​ສິນ​ຄ້າ</p>
+                                            <div style="text-align: center;">
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{order[0]}}<br><small class="fs-5"> ລາຍ​ການ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/order_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card text-light mb-3" style="background-color:#7490f3;">
+                                        <div class="card-body" style="height: 150px;background-color:#7490f3;">
+                                            <p class="m-0">​ລາຍ​​ການ​ຮັບ​ສິນ​ຄ້າ​</p>
+                                            <div style="text-align: center;">
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{recieve[0]}}<br><small class="fs-5"> ລາຍ​ການ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/recieve_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card text-light mb-3" style="background-color:#7490f3;">
+                                        <div class="card-body" style="height: 150px;background-color:#7490f3;">
+                                            <p class="m-0">​ລາຍ​​ການ​ເບີກ​ຈ່າຍ​ສິນ​ຄ້າ​</p>
+                                            <div style="text-align: center;">
+                                                <h2 class="mt-2 fw-bold text-light font-eng">{{withdraw[0]}}<br><small class="fs-5"> ​ລາຍ​ການ</small></h2>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                                            <a href="/withdraw_rp" class="small text-light stretched-link text-decoration-none" >ເບິ່ງລາຍລະອຽດ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            {% endif %}
+
+                        
+                            <!-- <div class="card-body">
+                                <table style="width:100%; border-radius: 12px;overflow: hidden;" id="dd">
+                                    <tr>
+                                        <th>
+                                            <center>
+                                                <h5>
+                                                    <b>
+                                                        ອັດຕາແລກປ່ຽນປະຈຳວັນ
+                                                    </b>
+                                                </h5>
+                                            </center>
+                                            <table class="table table-sm table-hover table-bordered"
+                                                style="background-color: #FFF;border-radius: 12px; border: 1px solid black;overflow: hidden;">
+                                                <tr>
+                                                    <th scope="col"
+                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">ລະຫັດ</th>
+                                                    <th scope="col"
+                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">ສະກຸນເງິນ</th>
+                                                    <th scope="col"
+                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">ຊື້</th>
+                                                    <th scope="col"
+                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">ຂາຍ</th>
+                                                </tr>
+                                                <tbody>
+                                                    {% for item in rate_ %}
+                                                    <tr>
+                                                        <td style="text-align: center;font-size: 10pt;">{{item[0]}}</td>
+                                                        <td style="text-align: left;font-size: 10pt;">{{item[1]}}</td>
+                                                        <td style="text-align: right;font-size: 10pt;background-color: #ff9eae;">{{item[2]}}</td>
+                                                        <td style="text-align: right;font-size: 10pt;background-color: #91ff6f;">{{item[3]}}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="col-md-12 col-sm-12 col-xl-3">
+
+                    <div class="container">
+                        <div class="card" style="background-color: darkslateblue;">
+                            <div class="card-body" style="background-color: darkslateblue;">
+                                <div class="container">
+                                    <center>
+                                        <div class="row" style="color: whitesmoke;">
+                                            <h5>
+                                                <b>
+                                                    ອັດຕາຄ່າບໍ​ລິ​ການວັນ​ທີ <b style="font-family:'Times New Roman', Times, serif">{{now[0]}}</b>
+                                                </b>
+                                            </h5>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-sm-12 d-flex justify-content-center">
+                                                
+                                            <div class="card"
+                                            style="background-color: #DDDDDD;border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                            <div class="body pt-2" style="border: 1px whitesmoke solid;">
+                                                <table style="width:100%; border-radius: 12px;border: 1px whitesmoke solid;">
+                                                    <tr>
+                                                        <th>
+                                                            <table class="table table-sm table-hover table-bordered"
+                                                                style="background-color: #FFF;border-radius: 12px;overflow: hidden;">
+                                                                <tr>
+                                                                    <th scope="col"
+                                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: darkslateblue; color: white;width: 35%;">ປະ​ເພດ​ບໍ​ລິການ</th>
+                                                                    <th scope="col"
+                                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: darkslateblue; color: white;width: 20%;">​ປະ​ເພດ​ນ້ຳ</th>
+                                                                    <th scope="col"
+                                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: darkslateblue; color: white;width: 25%;">​ລາ​ຄາ</th>
+                                                                    <th scope="col"
+                                                                        style="text-align: center;font-size: 10pt;font-weight: bold;background-color: darkslateblue; color: white;width: 20%;">ຫົວ​ໜ່ວຍ​ເຄື່ອງ</th>
+                                                                </tr>
+                                                                <tbody>
+                                                                    {% for item in rate_ %}
+                                                                    <tr>
+                                                                        <td style="text-align: center;font-size: 10pt;">{{item[2]}}</td>
+                                                                        <td style="text-align: left;font-size: 10pt;">{{item[3]}}</td>
+                                                                        <td style="text-align: right;font-size: 10pt;background-color: #ff9eae;">{{item[4]}} ₭</td>
+                                                                        <td style="text-align: right;font-size: 10pt;background-color: lightblue;">{{item[5]}}</td>
+                                                                        <!-- <td style="text-align: center;font-size: 10pt;">{{item[0]}}</td>
+                                                                        <td style="text-align: left;font-size: 10pt;">{{item[1]}}</td>
+                                                                        <td style="text-align: right;font-size: 10pt;background-color: #ff9eae;">{{item[2]}}</td>
+                                                                        <td style="text-align: right;font-size: 10pt;background-color: #91ff6f;">{{item[3]}}</td> -->
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+                    <!-- <div class="col-sm">
+                    </div>
+                    <div class="col-sm">
+                    </div> -->
+                </div>
+            </div>
+            <br>
+            <!-- <div class="card" id="price" style="background-color: black;">
+                <div class="card-body" style="background-color: darkcyan;">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 d-flex justify-content-center">
+                                <div class="card"
+                                    style="background-color: #DDDDDD; border-radius: 12px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                    <div class="card-body">
+                                        <table class="table-responsive" style="width:100%; border-radius: 12px;overflow: hidden;" id="dd">
+                                            <tr>
+                                                <th>
+                                                    <center>
+                                                        <h5>
+                                                            <b>
+                                                                ອັດຕາຄ່າບໍ​ລິ​ການ
+                                                            </b>
+                                                        </h5>
+                                                    </center>
+                                                    <table class="table table-sm table-hover table-bordered"
+                                                        style="background-color: #FFF;border-radius: 12px; border: 1px solid black;overflow: hidden;">
+                                                        <tr>
+                                                            <th scope="col"
+                                                                style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">ປະ​ເພດ​ບໍ​ລິການ</th>
+                                                            <th scope="col"
+                                                                style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">​ປະ​ເພດ​ນ້ຳ</th>
+                                                            <th scope="col"
+                                                                style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">​ລາ​ຄາ</th>
+                                                            <th scope="col"
+                                                                style="text-align: center;font-size: 10pt;font-weight: bold;background-color: #2F4F4F; color: white;">ຫົວ​ໜ່ວຍ​ເຄື່ອງ</th>
+                                                        </tr>
+                                                        <tbody>
+                                                            {% for item in rate_ %}
+                                                            <tr>
+                                                                <td style="text-align: center;font-size: 10pt;">{{item[2]}}</td>
+                                                                <td style="text-align: left;font-size: 10pt;">{{item[3]}}</td>
+                                                                <td style="text-align: right;font-size: 10pt;background-color: #ff9eae;">{{item[4]}} ₭</td>
+                                                                <td style="text-align: right;font-size: 10pt;background-color: #91ff6f;">{{item[5]}}</td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        </div>
+    </div>
 </div>
 
-
-
-
+<br>
 <script>
-function textneon(){
-    x = document.getElementById("email").value
-    y = document.getElementById("password").value
-
-    if(x == "" || y == ""){
-        document.getElementById("litheader").className = "litheader";
-    }else if (x == "" && y == ""){
-        document.getElementById("litheader").className = "litheader";
-    }else{
-        document.getElementById("litheader").className = "poweron";
+    function currentTime() {
+        var date = new Date(); /* creating object of Date class */
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        var midday = "AM";
+        midday = (hour >= 12) ? "PM" : "AM"; /* assigning AM/PM */
+        hour = (hour == 0) ? 12 : ((hour > 12) ? (hour - 12) : hour); /* assigning hour in 12-hour format */
+        hour = updateTime(hour);
+        min = updateTime(min);
+        sec = updateTime(sec);
+        document.getElementById("clock").innerText = hour + " : " + min + " : " + sec + " " + midday; /* adding time to the div */
+        var t = setTimeout(currentTime, 1000); /* setting timer */
     }
-}
+
+    function updateTime(k) { /* appending 0 before time elements if less than 10 */
+        if (k < 10) {
+            return "0" + k;
+        }
+        else {
+            return k;
+        }
+    }
+
+    currentTime();
 </script>
+
+
+
+{% endblock %}
