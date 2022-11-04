@@ -1,0 +1,356 @@
+{% extends "layout/layout.html" %}
+{% block title %}ການຈັດ​ການພະ​ນັກ​ງານ{% endblock %}
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.5/gsap.min.js"></script>
+{{ super() }}
+{% endblock %}
+{% block content %}
+<br>
+<div class="container col-sm-12">
+    <div class="card">
+        <div class="card-body" style="padding-right: 2.4%;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <center>
+                               ຈັດການຂໍ້ມູນພະນັກງານ
+                            </center>
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ message }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <script>
+                                $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+                                    $(".alert-dismissible").alert('close');
+                                });
+                            </script>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                        <div class="card-body">
+
+                            <form class="" action="/save_employee" method="post">
+                                <div class="form-group">
+                                    <label for="name">ລະຫັດພະນັກງານ:</label>
+                                    <input type="text" class="form-control" name="emp_id" value="{{doc_no}}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="No_id">ຊື່ພະ​ນັກ​ງານ:</label>
+                                    <input type="text" class="form-control" name="emp_name">
+                                </div>
+                                <div class="row">
+                                <div class="col-sm-3">
+                                    <label for="exampleFormControlSelect1">ເພດ</label>
+                                      <select name="emp_gender" class="form-control form-control-sm" style="text-align: center; height: 38px;">
+                                        <option selected disabled>--ເລືອກ--</option>
+                                        <option value="ຊາຍ">​ຊາຍ</option>
+                                        <option value="ຍິງ">​ຍິງ</option>
+                                      </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="exampleFormControlSelect1">ວັນ​ທີ​ເດືອນ​ປີເກີດ</label>
+                                    <input type="date" class="form-control" name="emp_bd" id="emp_bd" onchange="age()">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="exampleFormControlSelect1">ອາ​ຍຸ</label>
+                                    <input type="text" class="form-control" id="emp_age" readonly>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs" style="width: 20px;margin-left: -25px;"></div>
+                                    <div class="col-sm-4">
+                                      <label for="exampleFormControlSelect1">ແຂວງ</label>
+                                      <input class="form-control" type="text" value="" required name="emp_province">
+                                      <!-- <select id="emp_province" name="emp_province" class="form-control form-control-sm" onchange="show_city()">
+                                        <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                                        {% for items in pro_list %}
+                                        <option value={{items[0]}}>{{items[1]}}</option>
+                                        {% endfor %}
+                                      </select> -->
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <label for="exampleFormControlSelect1">ເມືອງ</label>
+                                      <input class="form-control" type="text" value="" required name="emp_district">
+                                      <!-- <select id="emp_district" name="emp_district" class="form-control form-control-sm" onchange="show_village()">
+                                        <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                                        {% for items in dis_list %}
+                                        <option value={{items[0]}}>{{items[1]}}</option>
+                                        {% endfor %}
+                                      </select> -->
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <label for="exampleFormControlSelect1">ບ້ານ</label>
+                                      <input class="form-control" type="text" value="" required name="emp_village">
+                                      <!-- <select class="form-control form-control-sm" name="emp_village" id="emp_village">
+                                        <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                                        
+                                      </select> -->
+                                    </div>
+                                  </div>
+                                <div class="form-group">
+                                    <label for="telephone">ເບີໂທ:</label>
+                                    <input type="number" class="form-control" name="emp_tel">
+                                </div>
+                                <fieldset style="border: 1px solid wheat; padding: 5px;">
+                                    <center><legend style="font-size: 15px;color: wheat;">ບັນຊີພະນັກງານ</legend></center>
+                                    <div class="form-group">
+                                        <label for="username">ຊື່ບັນຊີພະນັກງານ:</label>
+                                        <input type="text" class="form-control" name="admin_name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pwd">ລະຫັດຜ່ານບັນຊີ:</label>
+                                        <input type="password" id="dt" class="form-control" name="admin_pwd">
+                                    </div>
+                                </fieldset>
+                                <br>
+
+                                <button type="submit" class="btn btn-primary form-control">ບັນທຶກ</button>
+                                <hr>
+                                <div class="d-flex flex-wrap justify-content-around">
+                                <button type="reset" style="width: 150px;" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                                <button onclick="history.back()" style="width: 150px;" class="btn btn-secondary">ກັບຄືນ</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-8"
+                    style="background-color: whitesmoke; padding-top: 10px;padding-right: 15px;border-radius: 5px;">
+                    <table class="table table-sm table-hover table-responsive-sm table-responsive-md table-responsive-xl" id="Ratetable">
+                        <thead class="text-white" style="background-color:rgb(12, 100, 154);">
+                            <tr>
+                                <th scope="col" style="width: 70px;">ລະຫັດ</th>
+                                <th scope="col" style="width: 100px;">ຊື່ ແລະ ນາມສະກຸນ</th>
+                                <th scope="col" style="width: 100px;">ເພດ</th>
+                                <th scope="col" style="width: 100px;">ທີ່ຢູ່ອາໄສ</th>
+                                <th scope="col" style="width: 80px;">ເບີໂທລະສັບ</th>
+                                <th scope="col">ບັນຊີ</th>
+                                <!-- <th scope="col">ລະຫັດຜ່ານ</th> -->
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in emp_list %}
+                            <tr>
+                                <td class="#">{{item[0]}}</td>
+                                <td style="text-align: left;">{{item[1]}}</td>
+                                <td style="text-align: left;"> {{item[6]}}</td>
+                                <td style="text-align: left;">{{item[2]}}</td>
+                                <td style="text-align: left;">{{item[3]}}</td>
+                                <td style="text-align: left;"> {{item[4]}}</td>
+                                <!-- <td style="text-align: right;"> {{item[5]}}</td> -->
+                                <td>
+                                    {% if user == 'admin' %}
+                                    <a href="#"><i class="bi bi-pencil-square" data-toggle="modal"
+                                            data-target="#update_employee/{{item[0]}}"></i></a>
+                                    <a href="#" onclick="deleteitem('{{item[0]}}')"><i class="bi bi-trash-fill"
+                                            id="bitrash"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="update_employee/{{item[0]}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">ເເກ້ໄຂໍ້​ມູນ​ພະ​ນັກ​ງານ</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="background-color: #EFEFEF;">
+                                            <form class="" action="/update_employee/{{item[0]}}" method="post">
+                                                <input type="hidden" name="" value="">
+                                                <div class="form-group">
+                                                    <label for="usr">ລະຫັດພະ​ນັກ​ງານ:</label>
+                                                    <input type="text" class="form-control" name="emp_id" readonly
+                                                        value="{{item[0]}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="pwd">​ຊື່​ພະ​ນັກ​ງານ:</label>
+                                                    <input type="text" class="form-control" name="emp_name"
+                                                        value="{{item[1]}}">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-4 col-sm-12">
+                                                        <label for="pwd">ເພດ:</label>
+                                                        <select name="emp_gender" class="form-control form-control-sm" style="text-align: center; height: 38px;">
+                                                            <option selected hidden value="{{item[6]}}">{{item[6]}}</option>
+                                                            <option value="ຊາຍ">​ຊາຍ</option>
+                                                            <option value="ຊາຍ">​ຍິງ</option>
+                                                            </select>
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-sm-12">
+                                                        <label for="pwd">​ວັນ​ທີ​ເດືອນ​ປີ​ເກີດ:</label>
+                                                        <input type="text" class="form-control" name="emp_bd"
+                                                            value="{{item[7]}}">
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-sm-12">
+                                                        <label for="pwd">ເບີ​ໂທ:</label>
+                                                        <input type="number" class="form-control" name="emp_tel"
+                                                            value="{{item[3]}}">
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-sm-12">
+                                                        <label for="pwd">ແຂວງ:</label>
+                                                        <input type="text" class="form-control" name="emp_province"
+                                                            value="{{item[8]}}">
+                                                        <!-- <select id="emp_province2" name="emp_province" class="form-control form-control-sm" onchange="show_city()">
+                                                            <option selected value="{{item[11]}}" hidden style="text-align: center;">{{item[8]}}</option>
+                                                            {% for items in pro_list %}
+                                                            <option value={{items[0]}}>{{items[1]}}</option>
+                                                            {% endfor %}
+                                                        </select> -->
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-sm-12">
+                                                        <label for="pwd">ເມືອງ:</label>
+                                                        <input type="text" class="form-control" name="emp_district"
+                                                            value="{{item[9]}}">
+                                                        <!-- <select id="emp_district2" name="emp_district" class="form-control form-control-sm" onchange="show_village()">
+                                                            <option selected value="{{item[12]}}" hidden style="text-align: center;">{{item[9]}}</option>
+                                                            {% for items in dis_list %}
+                                                            <option value={{items[0]}}>{{items[1]}}</option>
+                                                            {% endfor %}
+                                                            </select> -->
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-sm-12">
+                                                        <label for="pwd">​ບ້ານ:</label>
+                                                        <input type="text" class="form-control" name="emp_village"
+                                                            value="{{item[9]}}">
+                                                        <!-- <select class="form-control form-control-sm" name="emp_village" id="emp_village2">
+                                                            <option selected value="{{item[13]}}" hidden style="text-align: center;">{{item[9]}}</option>
+                                                            
+                                                        </select> -->
+                                                    </div>
+                                                    <fieldset style="border: 1px solid darkblue;">
+                                                        <center><legend style="font-size: 15px;color: darkblue;"><b>ບັນຊີພະນັກງານ</b></legend></center>
+                                                        <div class="row">
+                                                        <div class="form-group col-md-12 col-sm-12">
+                                                            <label for="pwd">​​​ຊື່ບັນ​ຊີ:</label>
+                                                            <input type="text" class="form-control" name="admin_name"
+                                                                value="{{item[4]}}">
+                                                        </div>
+                                                        <!-- <div class="form-group col-md-6 col-sm-12">
+                                                            <label for="pwd">​ລະ​ຫັດ​ຜ່ານ:</label>
+                                                            <input type="text" class="form-control" name="admin_pwd"
+                                                                value="{{item[5]}}">
+                                                        </div> -->
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <!-- <div class="form-group">
+                                                    <label for="pwd">ວັນທີຊຳລະ:</label>
+                                                    <input type="text" id="" class="form-control" name="bill_date"
+                                                        value="{{item[3]}}" disabled />
+                                                </div> -->
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">ຍົກເລີກ</button>
+                                                    <button type="submit" id="" class="btn btn-primary"><i
+                                                            class="bi bi-save"></i>
+                                                        ບັນທຶກ</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteitem(id) {
+        swal({
+            title: 'ທ່ານຕ້ອງການລົບຂໍ້ມູນແທ້ບໍ໋?',
+            text: "ທ່ານຈະບໍ່ສາມາດຮ້ອງຄືນຂໍ້ມູນນີ້ໃດ້!",
+            type: 'question',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'ເຈົ້າ, ແມ່ນແລ້ວ!',
+            cancelButtonText: 'ບໍ່,ກັບຄືນ!',
+        }).then(function () {
+            location.href = "/delete_employee/" + id;
+        })
+    }
+
+    /*function age() {
+        //ປັດ​ຈຸ​ບັນ
+        var now =new Date();
+        var currentY= now.getFullYear();
+        var currentM= now.getMonth();
+        var currentD= now.getDay();
+
+        //ວັນ​ເດືອນ​ປີ​ເກີດ
+        var bd = new Date(document.getElementById("emp_bd").value);
+        var uptodate = new Date(bd);
+        var year= bd.getFullYear();
+        var month= bd.getMonth();
+        var day= bd.getDay();
+
+        var ageY = currentY - year;
+        var ageM =Math.abs(currentM- month);
+        var ageD =Math.abs(currentD- day);
+
+        // var age = document.getElementById("emp_age").value;
+        document.getElementById("emp_age").value = ageY + ' ປີ';
+    }*/
+
+    function age() {
+    var bd = document.getElementById('emp_bd').value;
+    var bdtime = +new Date(bd); //var Bday = (new Date(Bdate)).getTime();
+    var result = ~~ ((Date.now() - bdtime) / (31557600000));
+    var age = document.getElementById('emp_age');
+    age.value = result;
+}
+
+    function show_city() {
+    var y = document.getElementById("emp_province").value;
+    fetch('districtpredict/' + y).then(function (response) {
+      response.json().then(function (data) {
+        optionHTML = '';
+        for (city_c of data.districtlist) {
+          optionHTML += "<option value='" + city_c[0] + "'>" + city_c[1] + "</option>"
+        }
+        // unit_clothes.innerHTML = "" + optionHTML;
+        emp_district.innerHTML = "<option value='' selected disabled>--ເລືອກ--</option>" + optionHTML;
+      });
+    });
+  }
+
+  function show_village() {
+    var z = document.getElementById("emp_district").value;
+    fetch('villagepredict/' + z).then(function (response) {
+      response.json().then(function (data) {
+        optionHTML = '';
+        for (village_c of data.villagelist) {
+          optionHTML += "<option value='" + village_c[0] + "'>" + village_c[1] + "</option>"
+        }
+        // unit_clothes.innerHTML = "" + optionHTML;
+        emp_village.innerHTML = "<option value='' selected disabled>--ເລືອກ--</option>" + optionHTML;
+      });
+    });
+  }
+</script>
+<script>
+    document.getElementById('dt').max = new Date(
+        new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+</script>
+{% endblock %}

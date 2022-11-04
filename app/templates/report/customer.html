@@ -1,0 +1,268 @@
+{% extends "layout/layout.html" %}
+{% block title %}ລາຍງານຂໍ້​ມູນລູກ​ຄ້າ{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+  @media print{
+            .a {
+                display: none;
+            }
+           head{
+                display: none;
+            }
+            .navbar{
+                display: none;
+            }
+            .sectiom{
+                display: none;
+            }
+        }
+  
+  .cpanel{
+  /* width:16%; */
+  /* display: inline-block; */
+  /* background-color:#34495E; */
+  color:#fff;
+  margin-top: 15px;
+  }
+  .icon-part i{
+  font-size: 30px;
+  padding:10px;
+  /* border:1px solid #fff; */
+  border-radius:50%;
+  /* margin-top:-25px;
+  margin-bottom: 10px; */
+  background-color:#34495E;
+  }
+  /* gray */
+  .icon i{
+  font-size: 30px;
+  padding:10px;
+  /* border:1px solid #fff; */
+  border-radius:50%;
+  /* margin-top:-25px;
+  margin-bottom: 10px; */
+  background-color:lightslategray;
+  }
+  /* gray */
+  .icon p{
+  margin:0px;
+  font-size: 20px;
+  /* padding-bottom: 10px; */
+  }
+  .icon-part p{
+  margin:0px;
+  font-size: 20px;
+  /* padding-bottom: 10px; */
+  }
+  .card-content-part{
+  background-color: #2F4254;
+  /* padding: 5px 0px; */
+  }
+  .cpanel .card-content-part:hover{
+  background-color: #5a5a5a;
+  cursor: pointer;
+  }
+  .card-content-part a{
+  color:#fff;
+  text-decoration: none;
+  }
+  .cpanel-green .icon-part,.cpanel-green .icon-part i{
+  background-color: #16A085;
+  }
+  .cpanel-green .card-content-part{
+  background-color: #149077;
+  }
+
+  .cpanel-blue .icon-part,.cpanel-blue .icon-part i{
+  background-color: #2980B9;
+  }
+  .cpanel-blue .card-content-part{
+  background-color:#2573A6;
+  }
+
+  .cpanel-gray .icon,.cpanel-red .icon i{
+  background-color: lightslategray;
+  }
+  .cpanel-gray .card-content-part{
+  background-color: slategray;
+  }
+</style>
+<br>
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-header noPrint">
+      ລາຍງານ​ຂໍ້​ມູນລູກ​ຄ້າ
+    </div>
+    <div class="card-body">
+      <form action="/customer_rp_gender" method="post">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-1 text-end noPrint">
+                <label for="exampleFormControlSelect1">ເພດ</label>
+            </div>
+            <div class="col-sm-3">
+              <select name="gender" id="gender" class="form-control form-control-sm noPrint" style="text-align: center; height: 30px;">
+                <option selected value="%ຍ%" hidden>ທັງ​ໝົດ</option>
+                <option value="ຊາຍ">​ຊາຍ</option>
+                <option value="ຍິງ">​ຍິງ</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <button id="search" type="submit" class="btn btn-primary btn-sm btn-block noPrint">ຄົ້ນຫາ</button>
+            </div>
+            <div class="col-sm-2">
+              <button onclick="window.print();return false;" 
+              style="background-color: whitesmoke; border: black 4px solid; border-radius: 50px;width: 100px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" 
+              class="noPrint btn btn-sm btn-block">Print</button>
+            </div>
+        </div>
+      </form>
+      <hr>
+      <div class="noPrint">
+        {% for item in total %}
+        <!-- ລູກ​ຄ້າທັງ​ໝົດ: {{item[0]}} ຄົນ, ສະ​ໝັກສະ​ມາ​ຊິກ​: {{item[1]}} ຄົນ, ບໍ່​ສະ​ໝັກ​ສະ​ມາ​ຊິກ: {{item[2]}} ຄົນ -->
+        <center>
+          <!-- <div class="row justify-content-center">
+            <div class="col-xl-3 col-md-12 col-sm-12">
+              <div class="card text-light mb-3" style="background-color: steelblue;">
+                  <div class="card-body" style="background-color: steelblue;">
+                      <p class="m-0">ລູກ​ຄ້າທັງ​ໝົດ: <b>{{item[0]}}</b> <small class="fs-5">ຄົນ</small></p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-md-12 col-sm-12">
+              <div class="card text-light mb-3 bg-success">
+                  <div class="card-body bg-success">
+                      <p class="m-0">ສະ​ໝັກສະ​ມາ​ຊິກ​: <b>{{item[1]}}</b> <small class="fs-5">ຄົນ</small></p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-md-12 col-sm-12">
+              <div class="card text-light mb-3" style="background-color: lightslategray;">
+                  <div class="card-body" style="background-color: lightslategray;">
+                      <p class="m-0">ບໍ່​ສະ​ໝັກ​ສະ​ມາ​ຊິກ: <b>{{item[2]}}</b> <small class="fs-5">ຄົນ</small></p>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+        <div class="row justify-content-evenly">
+          <div class="cpanel cpanel-blue col-xl-2 col-md-12 col-sm-12">
+            <div class="icon-part">
+              <div class="row">
+                <div class="col-xl-4">
+                  <i class="fa fa-group" aria-hidden="true" style="width: 50px;height: 50px;"></i><br>
+                </div>
+                <div class="col-xl-8">
+                  <small>ລູກ​ຄ້າທັງ​ໝົດ</small>
+                <p><b>{{item[0]}}</b> ຄົນ</p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card-content-part">
+              <a href="#">More Details </a>
+            </div> -->
+          </div>
+
+          <div class="cpanel cpanel-green col-xl-2 col-md-12 col-sm-12">
+            <div class="icon-part">
+              <div class="row">
+                <div class="col-xl-4">
+                  <i class="fa fa-user-plus" aria-hidden="true" style="width: 50px;height: 50px;"></i><br>
+                </div>
+                <div class="col-xl-8">
+                  <small>ສະ​ໝັກສະ​ມາ​ຊິກ​</small>
+                <p><b>{{item[1]}}</b> ຄົນ</p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card-content-part">
+              <a href="#">More Details </a>
+            </div> -->
+          </div>
+
+          <div class="cpanel cpanel-gray col-xl-2 col-md-12 col-sm-12">
+            <div class="icon">
+              <div class="row">
+                <div class="col-xl-4">
+                  <i class="fa fa-user-times" aria-hidden="true" style="width: 50px;height: 50px;"></i><br>
+                </div>
+                <div class="col-xl-8">
+                  <small>ບໍ່​ສະ​ໝັກ​ສະ​ມາ​ຊິກ</small>
+                <p><b>{{item[2]}}</b> ຄົນ</p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card-content-part">
+              <a href="#">More Details </a>
+            </div> -->
+          </div>
+        </div>
+      </center>
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+      <center><h3>ລາຍງານ​ຂໍ້​ມູນ​ລູກ​ຄ້າ</h3></center>
+      
+      <table class="table table-hover table-bordered w-100">
+        <thead class="text-center">
+          <tr>
+            <th scope="col">ລະຫັດລູກ​ຄ້າ</th>
+            <th scope="col">​ເພດ</th>
+            <th scope="col">ຊື່ລູກ​ຄ້າ</th>
+            <th scope="col">ທີ່ຢູ່</th>
+            <th scope="col">ເບີ​ໂທ</th>
+            <th scope="col">​ອາ​ຍຸ</th>
+            <th scope="col">​ຊື່​ບັນ​ຊີ</th>
+            <!-- <th scope="col">​​ລະ​ຫັດ​ບັນ​ຊີ</th> -->
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in report %}
+          <tr>
+            <td style="text-align: left;">{{item[0]}}</td>
+            <td style="text-align: right;">{{item[6]}}</td>
+            <td style="text-align: left;">{{item[1]}}</td>
+            <td style="text-align: center;">{{item[2]}}</td>
+            <td style="text-align: right;">{{item[3]}}</td>
+            <td style="text-align: right;">{{item[7]}}</td>
+            <td style="text-align: right;">{{item[4]}}</td>
+            <!-- <td style="text-align: right;">{{item[5]}}</td> -->
+           
+          </tr>
+          {% endfor %}
+          
+          {% for item in total %}
+            <tr style="background-color: #DEDEDF;border: 1px solid #232629">
+              <td colspan="2"
+                style="text-align: right;font-size: 14pt;font-weight: bold;border-right: 1px solid #232629">
+                ລວມທັງໝົດ:&nbsp;&nbsp;</td>
+              <td colspan="1" style="text-align: center;font-size: 14pt;font-weight: bold;color: #00bd1f;" id="sumval">{{item[0]}} ຄົນ</td>
+              {% if item[1] is not none %}
+              <td colspan="1"
+                style="text-align: right;font-size: 14pt;font-weight: bold;border-right: 1px solid #232629">
+                ຊາຍ:&nbsp;&nbsp;</td>
+              <td colspan="1" style="text-align: center;font-size: 14pt;font-weight: bold;color: #00bd1f;" id="sumval">{{item[3]}}</td>
+              {% endif %}
+              {% if item[2] is not none %}
+              <td colspan="1"
+                style="text-align: right;font-size: 14pt;font-weight: bold;border-right: 1px solid #232629">
+                ​ຍິງ:&nbsp;&nbsp;</td>
+              <td colspan="1" style="text-align: center;font-size: 14pt;font-weight: bold;color: #00bd1f;" id="sumval">{{item[4]}}</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

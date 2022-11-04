@@ -1,0 +1,283 @@
+{% extends "layout/layout.html" %}
+{% block title %}ການຈັດ​ການຜູ້​ສະ​ໜອງ{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <center>
+                ຈັດ​ການ​ຂໍ້​ມູນຜູ້​ສະ​ໜອງ
+              </center>
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <script>
+                $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+                  $(".alert-dismissible").alert('close');
+                });
+              </script>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+            </div>
+            <div class="card-body">
+              <form action="/save_supplier" method="post" class="row position-relative flex-column needs-validation" novalidate>
+                
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">​ລະ​ຫັດ​​ຜູ້​ສະ​ໜອງ</label>
+                  <input class="form-control" type="text" value="{{doc_no}}" name="sup_id" readonly/>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">ຊື່​ຜູ້​ສະ​ໜອງ</label>
+                  <input class="form-control" type="text" value="" required name="​​sup_name">
+                </div>
+
+                <div class="row">
+                  <div class="col-xs" style="width: 20px;margin-left: -25px;"></div>
+                  <div class="col-sm-4">
+                    <label for="exampleFormControlSelect1">ແຂວງ</label>
+                    <input class="form-control" type="text" value="" required name="sup_province">
+                    <!-- <select id="sup_province" name="sup_province" class="form-control form-control-sm" onchange="show_city()">
+                      <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                      {% for items in pro_list %}
+                      <option value={{items[0]}}>{{items[1]}}</option>
+                      {% endfor %}
+                    </select> -->
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="exampleFormControlSelect1">ເມືອງ</label>
+                    <input class="form-control" type="text" value="" required name="sup_district">
+                    <!-- <select id="sup_district" name="sup_district" class="form-control form-control-sm" onchange="show_village()">
+                      <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                      {% for items in dis_list %}
+                      <option value={{items[0]}}>{{items[1]}}</option>
+                      {% endfor %}
+                    </select> -->
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="exampleFormControlSelect1">ບ້ານ</label>
+                    <input class="form-control" type="text" value="" required name="sup_village">
+                    <!-- <select class="form-control form-control-sm" name="sup_village" id="sup_village">
+                      <option selected disabled style="text-align: center;">--ເລືອກ--</option>
+                      
+                    </select> -->
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">ເບີ​ໂທ</label>
+                  <input class="form-control" type="number" value="" required name="sup_tel">
+                </div>
+  
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">ອີ​ເມວ</label>
+                  <!-- <input class="form-control" type="text" value="" required name="sup_email"> -->
+                  <input type="email" name="sup_email" class="email white form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                  <!-- <div class="valid-feedback feedback-pos">
+                    Looks good!
+                  </div> -->
+                  <div class="invalid-feedback feedback-pos">
+                    ອີ​ເມວບໍ່​ຖືກ​ຕ້ອງ
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">ບັນທຶກ</button>
+                <hr>
+                <div class="d-flex flex-wrap justify-content-around">
+                <button type="reset" style="width: 150px;" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                <button onclick="history.back()" style="width: 150px;" class="btn btn-secondary">ກັບຄືນ</button>
+                </div>
+
+                <!-- <div class="container">
+                  <div class="row justify-content-sm-center">
+                    <div class="col-sm-auto" style="border: 1px solid;">
+                      <button type="reset" class="btn btn-warning">ລ້າງ​ຟອມ</button>
+                    </div>
+                    <div class="col-sm-auto"  style="border: 1px solid;">
+                      <button onclick="history.back()" class="btn btn-secondary">ກັບຄືນ</button>
+                    </div>
+                  </div>
+                </div> -->
+                  
+                  
+
+              </form>
+              <!-- <hr>
+
+              <form class="row position-relative flex-column needs-validation" novalidate>
+                <input type="email" name="email" placeholder="Your email ID.." class="email white col-7 col-md-4 col-lg-7 ml-3 form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                <div class="valid-feedback feedback-pos">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback feedback-pos">
+                  Please input valid email ID
+                </div>
+                <button type="submit" class="btn btn-danger text-uppercase sbmt-btn col-3 col-md-2 col-lg-4 ml-1" value="validate">Submit</button>
+              </form> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8" style="background-color: whitesmoke; padding-top: 10px;padding-right: 15px;border-radius: 5px;">
+          <table class="table table-sm table-hover table-responsive-sm table-responsive-md table-responsive-xl" id="Ratetable">
+            <thead class="text-white" style="background-color:rgb(12, 100, 154);">
+              <tr>
+                <th scope="col">ລະ​ຫັດ​​ຜູ້​ສະ​ໜອງ</th>
+                <th scope="col">​ຊື່​ຜູ້​ສະ​ໜອງ</th>
+                <th scope="col">ແຂວງ</th>
+                <th scope="col">ເມືອງ</th>
+                <th scope="col">ບ້ານ</th>
+                <th scope="col">ເບີ​ໂທ</th>
+                <th scope="col">ອີ​ເມວ</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in supplier_list %}
+              <tr>
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+                <td>{{item[2]}}</td>
+                <td>{{item[3]}}</td>
+                <td>{{item[4]}}</td>
+                <td>{{item[5]}}</td>
+                <td>{{item[6]}}</td>
+                <td><a href="#"><i class="bi bi-pencil-square" data-toggle="modal" data-target="#update_supplier/{{item[0]}}"></i></a>
+                <a href="#" onclick="deleteitem('{{item[0]}}')"><i class="bi bi-trash-fill" id="bitrash"></i></a></td>
+              </tr>
+                <div class="modal fade" id="update_supplier/{{item[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">ເເກ້ໄຂຂໍ້ມູນຜູ້​ສະ​ໜອງ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="background-color: #EFEFEF;">
+
+                      <form action="/update_supplier/{{item[0]}}" method="post">
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">ລະ​ຫັດ​ຜູ້​ສະ​ໜອງ</label>
+                          <input class="form-control" type="text" required name="sup_id" value="{{item[0]}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">ຊື່​ຜູ້​ສະ​ໜອງ</label>
+                          <input class="form-control" type="text" required name="sup_name" value="{{item[1]}}">
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-4 col-sm-12">
+                            <label for="exampleFormControlSelect1">ແຂວງ</label>
+                            <input class="form-control" type="text" required name="sup_province" value="{{item[2]}}">
+                          </div>
+                          <div class="form-group col-md-4 col-sm-12">
+                            <label for="exampleFormControlSelect1">ເມືອງ</label>
+                            <input class="form-control" type="text" required name="sup_district" value="{{item[3]}}">
+                          </div>
+                          <div class="form-group col-md-4 col-sm-12">
+                            <label for="exampleFormControlSelect1">ບ້ານ</label>
+                            <input class="form-control" type="text" required name="sup_village" value="{{item[4]}}">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">​ເບີ​ໂທ</label>
+                          <input class="form-control" type="text" required name="sup_tel" value="{{item[5]}}">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">​ອີ​ເມວ</label>
+                          <input class="form-control" type="text" required name="sup_email" value="{{item[6]}}">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">ຍົກເລີກ</button>
+                          <button type="submit" id="" class="btn btn-primary">ບັນທຶກ</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function deleteitem(id) {
+    swal({
+      title: 'ທ່ານຕ້ອງການລົບຂໍ້ມູນແທ້ບໍ໋?',
+      text: "ທ່ານຈະບໍ່ສາມາດຮ້ອງຄືນຂໍ້ມູນນີ້ໃດ້!",
+      type: 'question',
+      showCancelButton: true,
+      cancelButtonColor: '#3085d6',
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'ເຈົ້າ, ແມ່ນແລ້ວ!',
+      cancelButtonText: 'ບໍ່,ກັບຄືນ!',
+    }).then(function () {
+      location.href = "/delete_supplier/" + id;
+    })
+  }
+
+  (function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
+  function show_city() {
+    var y = document.getElementById("sup_province").value;
+    fetch('districtpredict/' + y).then(function (response) {
+      response.json().then(function (data) {
+        optionHTML = '';
+        for (city_c of data.districtlist) {
+          optionHTML += "<option value='" + city_c[0] + "'>" + city_c[1] + "</option>"
+        }
+        // unit_clothes.innerHTML = "" + optionHTML;
+        sup_district.innerHTML = "<option value='' selected disabled>--ເລືອກ--</option>" + optionHTML;
+      });
+    });
+  }
+
+  function show_village() {
+    var z = document.getElementById("sup_district").value;
+    fetch('villagepredict/' + z).then(function (response) {
+      response.json().then(function (data) {
+        optionHTML = '';
+        for (village_c of data.villagelist) {
+          optionHTML += "<option value='" + village_c[0] + "'>" + village_c[1] + "</option>"
+        }
+        // unit_clothes.innerHTML = "" + optionHTML;
+        sup_village.innerHTML = "<option value='' selected disabled>--ເລືອກ--</option>" + optionHTML;
+      });
+    });
+  }
+</script>
+{% endblock %}

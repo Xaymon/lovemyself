@@ -1,0 +1,501 @@
+<!doctype html>
+<html>
+
+<head>
+    {% block head %}
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script type="text/javascript" src="js/addons/datatables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    
+    
+    <center><title>{% block title %}{% endblock %} -ລະບົບຮ້ານສະດວກຊັກ M-Soul</title></center>
+    <style>
+        /* #footer {
+            min-height:30vh;
+            bottom: 0;
+            width: 100%;
+        } */
+        nav,
+        a {
+            font-family: "Noto Sans Lao";
+        }
+
+        body {
+            min-height:100vh;
+            position:relative;
+            background-color: ghostwhite;
+            /* background-color:#bf9400 #EFEFEF; */
+            font-family: "Noto Sans Lao";
+        }
+
+        .card-body{
+            background-color: whitesmoke;
+        }
+
+        .card{
+            background-color: white;
+        }
+
+        table {
+            font-family: "Noto Sans Lao";
+            border-collapse: collapse;
+            /* width: 40%; */
+        }
+        
+        #bitrash{
+            color: red;
+        }
+
+        /* #search{
+            background-color: blue;
+        } */
+
+        td,
+        th {
+            border: 0.5px solid darkcyan;
+            text-align: center;
+            padding: 5px;
+            height: 2%;
+            font-size: 15px;
+            /* font-weight: bold; */
+        }
+
+        .card-header {
+            background-color: rgb(12, 100, 154);
+            color: white;
+            border-bottom: 1px solid whitesmoke;
+            font-size: 18px;
+        }
+
+        .swal2-title,
+        .swal2-content,
+        .swal2-confirm,
+        .swal2-cancel {
+            font-family: Phetsarath OT;
+        }
+
+        @media print {
+            .noPrint {
+                display: none;
+            }
+        }
+    </style>
+    {% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light shadow"
+        style="border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;background-color: ghostwhite;">
+        <!-- <div class="container-fluid"> -->
+        <a class="navbar-brand" href="/">
+            <!-- <img src="../images/Logo.jpg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
+            <!-- <img src="https://scontent.fvte5-1.fna.fbcdn.net/v/t1.6435-1/91902276_105173554476285_4439313274143506432_n.jpg?stp=dst-jpg_p320x320&_nc_cat=110&ccb=1-7&_nc_sid=7206a8&_nc_eui2=AeGTqCa4byBjevpEVUoW1IMWhMIYSuNNH4mEwhhK400fibICM8J-AGEhBvQZ7DwirZZoZiykldXJN2-9mxtK97AQ&_nc_ohc=ZrwoQ0jlH8YAX9dnHy0&_nc_ht=scontent.fvte5-1.fna&oh=00_AT9LTFmh_SyK4a45Wnq1D6YTfdnSD4E4eMoQEoHaSa6TEQ&oe=62C84622" width="60" height="60" class="d-inline-block align-top rounded-circle" alt=""> -->
+            <img src="{{url_for('static',filename='images/Logo.jpg')}}" class="d-inline-block align-top rounded-circle" alt="" width="60" height="60">
+            <a class="navbar-brand text-start" style="font-family: 'Times New Roman', Times, serif;color: rgb(0, 153, 255);" href="/">
+                M-Soul By Pmk Lao
+                <!-- #cff4fe; -->
+            </a>
+        </a>
+        <!-- </div> -->
+        <!-- <div class="logo-image">
+        </div> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav" id="menubar" style="padding: 0 5% 0 5%">
+                {% if roles == 'admin' %}
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-collection"></i>&nbsp; ລາຍຮັບ-ລາຍຈ່າຍ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/income">ລາຍຮັບ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/outcome">ລາຍຈ່າຍ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/dm">ຝາກເງິນ</a>
+                        <a class="dropdown-item" href="/wm">ຖອນເງິນ</a>
+                    </div>
+                </li> -->
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-collection"></i>&nbsp; ເຈົົ້າໜີ້
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/ap">ກຳນົດເຈົ້າໜີ້</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/setap">ຕັ້ງໜີ້</a>
+                        <a class="dropdown-item" href="/report_ap_balance">ລາຍງານໜີ້ຄົງເຫຼືອ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/pvhome">ຈ່າຍຊຳລະເຈົ້າໜີ້</a>
+                        <a class="dropdown-item" href="/report_ap_payment">ລາຍງານຈ່າຍຊຳລະເຈົ້າໜີ້</a>
+                    </div>
+                </li> -->
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-list-task"></i> ການຈັດການ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/customer" style="color: darkslateblue">ຈັດການຂໍ້ມູນລູກຄ້າ</a><!-- /manage_rate -->
+                        <a class="dropdown-item" href="/employee" style="color: darkslateblue">ຈັດການຂໍ້ມູນພະນັກງານ</a>
+                        <a class="dropdown-item" href="/supplier" style="color: darkslateblue">ຈັດການຂໍ້ມູນຜູ້ສະໜອງ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/service_category" style="color: darkslateblue">ຈັດການປະເພດການບໍລິການ</a>
+                        <a class="dropdown-item" href="/water_type" style="color: darkslateblue">ຈັດການຊະນິດນ້ຳ​ທີ່​ໃຊ້</a>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/product" style="color: darkslateblue">ຈັດການຂໍ້ມູນສິນຄ້າ</a>
+                        <!-- <a class="dropdown-item" href="/manageadduser">ການ​ຈັດ​ການ​ບັນ​ຊີຜູ້​ໃຊ້</a> -->
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-wallet2"></i>&nbsp;ການບໍລິການ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/service_price" style="background-color: white;color: darkslateblue"></i> &nbsp;​ກຳ​ນົດການບໍ​ລິ​ການ</a>
+                        <!-- <a class="dropdown-item" href="/homeex"><i class="bi bi-cash"></i> &nbsp;ບໍລິການຂອງຮ້ານ​ສະ​ດວກ​ຊັກ</a>
+                        <div class="dropdown-divider"></div> -->
+                        <a class="dropdown-item" href="/home_service" style="background-color: white;color: darkslateblue"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hypnotize" viewBox="0 0 16 16">
+                            <path d="m7.949 7.998.006-.003.003.009-.01-.006Zm.025-.028v-.03l.018.01-.018.02Zm0 .015.04-.022.01.006v.04l-.029.016-.021-.012v-.028Zm.049.057v-.014l-.008.01.008.004Zm-.05-.008h.006l-.006.004v-.004Z"/>
+                            <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM4.965 1.69a6.972 6.972 0 0 1 3.861-.642c.722.767 1.177 1.887 1.177 3.135 0 1.656-.802 3.088-1.965 3.766 1.263.24 2.655-.815 3.406-2.742.38-.975.537-2.023.492-2.996a7.027 7.027 0 0 1 2.488 3.003c-.303 1.01-1.046 1.966-2.128 2.59-1.44.832-3.09.85-4.26.173l.008.021.012-.006-.01.01c.42 1.218 2.032 1.9 4.08 1.586a7.415 7.415 0 0 0 2.856-1.081 6.963 6.963 0 0 1-1.358 3.662c-1.03.248-2.235.084-3.322-.544-1.433-.827-2.272-2.236-2.279-3.58l-.012-.003c-.845.972-.63 2.71.666 4.327a7.415 7.415 0 0 0 2.37 1.935 6.972 6.972 0 0 1-3.86.65c-.727-.767-1.186-1.892-1.186-3.146 0-1.658.804-3.091 1.969-3.768l-.002-.007c-1.266-.25-2.666.805-3.42 2.74a7.415 7.415 0 0 0-.49 3.012 7.026 7.026 0 0 1-2.49-3.018C1.87 9.757 2.613 8.8 3.696 8.174c1.438-.83 3.084-.85 4.253-.176l.005-.006C7.538 6.77 5.924 6.085 3.872 6.4c-1.04.16-2.03.55-2.853 1.08a6.962 6.962 0 0 1 1.372-3.667l-.002.003c1.025-.243 2.224-.078 3.306.547 1.43.826 2.269 2.23 2.28 3.573L8 7.941c.837-.974.62-2.706-.673-4.319a7.415 7.415 0 0 0-2.362-1.931Z"/>
+                          </svg>&nbsp;ຊັກ​ແຫ້ງ&nbsp;+​&nbsp;ລີດ</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-collection"></i>&nbsp; ສັ່ງຊື້-ຮັບ-ເບີກສິນຄ້າ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/order" style="color: darkslateblue">ການສັ່ງຊື້ສິນຄ້າເຂົ້າສາງ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/recieve" style="color: darkslateblue">​ການຮັບສິນຄ້າເຂົ້າສາງ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/withdraw_item" style="color: darkslateblue">ເບີກຈ່າຍສິນຄ້າອອກສາງ</a>
+                        <!-- <a class="dropdown-item" href="/outcome">ເບີກຈ່າຍສິນຄ້າອອກສາງ</a> -->
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-bar-chart"></i> ການລາຍງານ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/income_rp" style="color: darkslateblue">ລາຍຮັບ</a>
+                        <a class="dropdown-item" href="/outcome_rp" style="color: darkslateblue">ລາຍຈ່າຍ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/service_rp" style="color: darkslateblue">ລາຍງານການບໍ​ລິ​ການ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/order_rp" style="color: darkslateblue">ລາຍງານການສັ່ງ​ຊື້ສິນຄ້າ</a>
+                        <a class="dropdown-item" href="/recieve_rp" style="color: darkslateblue">ລາຍງານການນຳ​ສົ່ງສິນຄ້າ</a>
+                        <a class="dropdown-item" href="/withdraw_rp" style="color: darkslateblue">​ລາຍ​ງານ​ເບີກ​ຈ່າຍ​ສິນ​ຄ້າ</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/customer_rp" style="color: darkslateblue">ລາຍງານຂໍ້​ມູນ​ລູກ​ຄ້າ</a>
+                        <a class="dropdown-item" href="/employee_rp" style="color: darkslateblue">​ລາຍ​ງານ​ຂໍ້​ມູນ​ພະ​ນັກ​ງານ</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-wallet2"></i>&nbsp;ການບໍລິການ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/user_price" style="background-color: white;"></i> &nbsp;​ລາ​ຍການ​ບໍ​ລິ​ການ</a>
+                        <!-- <a class="dropdown-item" href="/homeex"><i class="bi bi-cash"></i> &nbsp;ບໍລິການຂອງຮ້ານ​ສະ​ດວກ​ຊັກ</a>
+                        <div class="dropdown-divider"></div> -->
+                        <!-- <a class="dropdown-item" href="/hometf" style="background-color: white;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hypnotize" viewBox="0 0 16 16">
+                            <path d="m7.949 7.998.006-.003.003.009-.01-.006Zm.025-.028v-.03l.018.01-.018.02Zm0 .015.04-.022.01.006v.04l-.029.016-.021-.012v-.028Zm.049.057v-.014l-.008.01.008.004Zm-.05-.008h.006l-.006.004v-.004Z"/>
+                            <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM4.965 1.69a6.972 6.972 0 0 1 3.861-.642c.722.767 1.177 1.887 1.177 3.135 0 1.656-.802 3.088-1.965 3.766 1.263.24 2.655-.815 3.406-2.742.38-.975.537-2.023.492-2.996a7.027 7.027 0 0 1 2.488 3.003c-.303 1.01-1.046 1.966-2.128 2.59-1.44.832-3.09.85-4.26.173l.008.021.012-.006-.01.01c.42 1.218 2.032 1.9 4.08 1.586a7.415 7.415 0 0 0 2.856-1.081 6.963 6.963 0 0 1-1.358 3.662c-1.03.248-2.235.084-3.322-.544-1.433-.827-2.272-2.236-2.279-3.58l-.012-.003c-.845.972-.63 2.71.666 4.327a7.415 7.415 0 0 0 2.37 1.935 6.972 6.972 0 0 1-3.86.65c-.727-.767-1.186-1.892-1.186-3.146 0-1.658.804-3.091 1.969-3.768l-.002-.007c-1.266-.25-2.666.805-3.42 2.74a7.415 7.415 0 0 0-.49 3.012 7.026 7.026 0 0 1-2.49-3.018C1.87 9.757 2.613 8.8 3.696 8.174c1.438-.83 3.084-.85 4.253-.176l.005-.006C7.538 6.77 5.924 6.085 3.872 6.4c-1.04.16-2.03.55-2.853 1.08a6.962 6.962 0 0 1 1.372-3.667l-.002.003c1.025-.243 2.224-.078 3.306.547 1.43.826 2.269 2.23 2.28 3.573L8 7.941c.837-.974.62-2.706-.673-4.319a7.415 7.415 0 0 0-2.362-1.931Z"/>
+                          </svg>&nbsp;ຊັກ​ແຫ້ງ</a>
+                        
+                        <a class="dropdown-item" href="/hometf" style="background-color: white;"><i class="bi-symmetry-horizontal"></i> &nbsp;​ລີດ</a> -->
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-clipboard-data"></i> ສະ​ຖາ​ນະ​ການ​ຊັກ​ເຄື່ອງ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/user_servicing" style="background-color: white;color: darkslateblue">ລາຍ​ການທີ່ພວມ​ດຳ​ເນີນ​ການ</a>
+                        <a class="dropdown-item" href="/user_service" style="background-color: white;color: darkslateblue">​ການ​ຊັກ​ເຄື່ອງ​ທັງ​ໝົດ</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="color: darkslateblue">
+                        <i class="bi bi-list-task"></i> ການຈັດການໂປ​ຣ​ໄຟ​ລ໌
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <!-- class = dropdown-menu -->
+                        <a class="dropdown-item" href="/profile" style="background-color: white;color: darkslateblue">ຈັດການຂໍ້ມູນສ່ວນ​ໂຕ</a>
+                        <a class="dropdown-item" href="/user_account" style="background-color: white;color: darkslateblue">ຈັດການ​ບັນ​ຊີ​ຜູ້​ໃຊ້</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/about" id="navbarDropdownMenuLink" style="color: darkslateblue">
+                        <i class="bi-telephone"></i> ຕິດ​ຕໍ່​ສອບ​ຖາມ
+                    </a>
+                </li>
+                {% endif %}
+                <!-- <li class="nav-item" style="margin-left: 500px;">
+                    <a class="nav-link" href="/logout" style="color:whitesmoke;">ອອກ​ຈາກ​ລະ​ບົບ</a>
+                </li> -->
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" style="color: darkslateblue;font-family: 'Times New Roman', Times, serif;"><b>{{user}}</b></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/logout" style="color: darkslateblue">ອອກ​ຈາກ​ລະ​ບົບ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    {% block footer %}
+<div id="footer" class="sectiom"  style="background-color:rgb(12, 100, 154); font-family: 'PHETSARATH OT';">
+    <section class="py-0 pt-7 bg-1000">
+
+        <div class="container mt-5">
+          <div class="row justify-content-lg-between">
+            <!-- <h3 class="lh-lg fw-bold text-white">ຮ້ານສະດວກຊັກ M-soul by PMK Lao</h3> -->
+            <hr>
+            <div class="col-6 col-md-6 col-lg-auto mb-3">
+                <ul class="list-unstyled mb-md-4 mb-lg-0 text-white">
+                  <li class="lh-lg"><h5><h4>ທີ່​ຕັ້ງ: </h4>ຮ່ອງໄກ່ແກ້ວ ເມືອງຈັນທະບູລີ ນະຄອນຫຼວງວຽງຈັນ ຖະໜົນສີບຸນເຮືອງ</h5></li>
+                  <li class="lh-lg"><h5><h4>ເປີດ​ຮ້ານ: </h4>ທຸກ​ມື້(ຈັນ-ທິດ) 8:00 AM - 8:00 PM</h5></li>
+                </ul>
+              </div>
+              <!-- <div class="col-6 col-md-4 col-lg-auto mb-3">
+                <ul class="list-unstyled mb-md-4 mb-lg-0 text-white">
+                  <li class="lh-lg"><h6 class="">ການບໍລິການ:</h6></li>
+                  <li class="lh-lg"><h6 class="">ຊັກຜ້າທົ່ວໄປ</h6></li>
+                  <li class="lh-lg"><h6 class="">ຊັກອົບແຫ້ງ</h6></li>
+                  <li class="lh-lg"><h6 class="">ຊັກນຳ້ອຸ່ນ</h6></li>
+                  <li class="lh-lg"><h6 class="">ຊັກນຳ້ຮ້ອນ</h6></li>
+                  <li class="lh-lg"><h6 class="">ຊັກນຳ້ເຢັນ</h6></li>
+  
+                </ul>
+              </div> -->
+              <div class="col-6 col-md-6 col-lg-auto mb-3">
+                <ul class="list-unstyled mb-md-4 mb-lg-0 text-white">
+                  <li class="lh-lg"><h5 class=""><h4>ຕິດຕໍ່ຮ້ານເຮົາ: </h4>
+                    <!-- <i class="fa fa-mobile" aria-hidden="true"></i>&nbsp;+856 20 55 611 070&nbsp; -->
+
+                    <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;+856 20 55 611 070
+                    
+                    <a href="https://www.facebook.com/M-Soul-by-Pmk-Lao-%E0%BA%AE%E0%BB%89%E0%BA%B2%E0%BA%99%E0%BA%AA%E0%BA%B0%E0%BA%94%E0%BA%A7%E0%BA%81%E0%BA%8A%E0%BA%B1%E0%BA%81%E0%BA%AD%E0%BA%BB%E0%BA%9A%E0%BB%81%E0%BA%AB%E0%BB%89%E0%BA%87-110709394441888"
+                   class="btn btn-outline-light btn-floating m-1"
+                   class="text-white"
+                   role="button"
+                   ><i class="fa fa-facebook"></i
+                  ></a>
+                  <a href="https://api.whatsapp.com/send?phone=8562055611070&app=facebook&entry_point=page_cta&fbclid=IwAR0-Tr17hA63rBtlWO2hYR7cU3t29tGVIyiJN_NG026FUlWXMAKapzjJW1c"
+                   class="btn btn-outline-light btn-floating m-1"
+                   class="text-white"
+                   role="button"
+                >
+                <i class="fa fa-whatsapp"></i>
+                </a>
+                </li>
+                  <!-- <li class="lh-lg"><h6 class="">info@gmail.com</h6></li> -->
+                  <!-- <li class="lh-lg"><h6 class=""></li>
+                  <li class="lh-lg"><h6 class=""></h6></li> -->
+
+              </ul>
+                <!-- <a href="https://www.facebook.com/M-Soul-by-Pmk-Lao-%E0%BA%AE%E0%BB%89%E0%BA%B2%E0%BA%99%E0%BA%AA%E0%BA%B0%E0%BA%94%E0%BA%A7%E0%BA%81%E0%BA%8A%E0%BA%B1%E0%BA%81%E0%BA%AD%E0%BA%BB%E0%BA%9A%E0%BB%81%E0%BA%AB%E0%BB%89%E0%BA%87-110709394441888"
+                   class="btn btn-outline-light btn-floating m-1"
+                   class="text-white"
+                   role="button"
+                   ><i class="fa fa-facebook"></i
+                  ></a> -->
+                <!-- <a
+                   class="btn btn-outline-light btn-floating m-1"
+                   class="text-white"
+                   role="button"
+                   ><i class="fa fa-twitter"></i
+                  ></a> -->
+                <!-- <a
+                   class="btn btn-outline-light btn-floating m-1"
+                   class="text-white"
+                   role="button"
+                   ><i class="fa fa-google"></i
+                  ></a>-->
+                <!-- <a href="https://api.whatsapp.com/send?phone=8562055611070&app=facebook&entry_point=page_cta&fbclid=IwAR0-Tr17hA63rBtlWO2hYR7cU3t29tGVIyiJN_NG026FUlWXMAKapzjJW1c"
+                   class="btn btn-outline-light btn-floating m-1"
+                   class="text-white"
+                   role="button"
+                >
+                <i class="fa fa-whatsapp"></i>
+                </a> -->
+            
+              <div class="row"></div>
+            </div>
+            
+          <hr class="text-900" />
+
+            <h6 class="text-center text-white">ຂໍຂອບໃຈທູກທ່ານທີ່ເຂົ້າມາໃຊ້ບໍລິການ</h6>
+            <!-- <h6 class="text-center text-white" style="font-family:'Times New Roman'">2022</h6> -->
+          
+
+      </section>
+
+     
+</div>
+{% endblock %}
+    <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../js/bootstrap.bundle.min.js"
+        integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- sweet  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "oLanguage": {
+                    "sSearch": "ຄົ້ນຫາ:"
+                },
+                "language": {
+                    "lengthMenu": "ສະແດງ _MENU_ ລາຍການ",
+                    "zeroRecords": "ບໍພົບລາຍການ - sorry",
+                    "info": "ໜ້າທີ _PAGE_ ຂອງ _PAGES_",
+                    "infoEmpty": "ບໍມີລາຍການ",
+                    "infoFiltered": "(ຄົ້ນຫາຈາກ _MAX_ ລາຍການ)",
+                    "paginate": {
+                        "previous": "ກັບຄືນ",
+                        "next": "ຕໍ່ໄປ"
+                    }
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#Ratetable').DataTable({
+                "oLanguage": {
+                    "sSearch": "ຄົ້ນຫາ:"
+                },
+                'iDisplayLength': 10,
+                "language": {
+                    "lengthMenu": "ສະແດງ _MENU_ ລາຍການ",
+                    "zeroRecords": "ບໍ່ພົບລາຍການ - sorry",
+                    "info": "ໜ້າທີ _PAGE_ ຂອງ _PAGES_",
+                    "infoEmpty": "ບໍມີລາຍການ",
+                    "infoFiltered": "(ຄົ້ນຫາຈາກ _MAX_ ລາຍການ)",
+                    "paginate": {
+                        "previous": "ກັບຄືນ",
+                        "next": "ຕໍ່ໄປ"
+                    }
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#reporttb').DataTable({
+                "oLanguage": {
+                    "sSearch": "ຄົ້ນຫາ:"
+                },
+                'iDisplayLength': 10,
+                "language": {
+                    "lengthMenu": "ສະແດງ _MENU_ ລາຍການ",
+                    "zeroRecords": "ບໍ່ພົບລາຍການ - sorry",
+                    "info": "ໜ້າທີ _PAGE_ ຂອງ _PAGES_",
+                    "infoEmpty": "ບໍມີລາຍການ",
+                    "infoFiltered": "(ຄົ້ນຫາຈາກ _MAX_ ລາຍການ)",
+                    "paginate": {
+                        "previous": "ກັບຄືນ",
+                        "next": "ຕໍ່ໄປ"
+                    }
+                }
+            });
+        });
+        var loadFile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+        $(window).load(function () {
+            //This execute when entire finished loaded
+            window.print();
+        });
+
+        function currentTime() {
+        var date = new Date(); /* creating object of Date class */
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        var midday = "AM";
+        midday = (hour >= 12) ? "PM" : "AM"; /* assigning AM/PM */
+        hour = (hour == 0) ? 12 : ((hour > 12) ? (hour - 12) : hour); /* assigning hour in 12-hour format */
+        hour = updateTime(hour);
+        min = updateTime(min);
+        sec = updateTime(sec);
+        document.getElementById("clock").innerText = hour + " : " + min + " : " + sec + " " + midday; /* adding time to the div */
+        var t = setTimeout(currentTime, 1000); /* setting timer */
+    }
+
+    function updateTime(k) { /* appending 0 before time elements if less than 10 */
+        if (k < 10) {
+            return "0" + k;
+        }
+        else {
+            return k;
+        }
+    }
+
+    currentTime();
+    </script>
+    <!-- for datepicker -->
+
+</body>
+
+</html>

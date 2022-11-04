@@ -1,0 +1,79 @@
+{% extends "layout/layout.html" %}
+{% block title %}Contact{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<style>
+  td,.text-decoration-none, .btn ,span{font-family: 'Times New Roman', Times, serif;}
+  .text-decoration-none{font-size: 17px;}
+  #Whatapp {color: lightgreen;}
+  #Whatapp:hover {color: green;}
+</style>
+<br>
+<div class="container d-flex justify-content-center">
+  <div class="card" style="width: 50%;">
+    <div class="card-body" style="background-color:whitesmoke;">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <center>
+                <h3>ຊ່ອງ​ທາງ​ການ​ຕິດ​ຕໍ່</h3>
+              </center>
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <script>
+                $(".alert-dismissible").fadeTo(2000, 500).fadeOut(500, function () {
+                  $(".alert-dismissible").alert('close');
+                });
+              </script>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+            </div>
+            <div class="card-body" >
+                <center>
+                    <br>
+                <div>
+                    <br>
+                    <table>
+                        <tr>
+                          <td><a href="https://www.facebook.com/M-Soul-by-Pmk-Lao-%E0%BA%AE%E0%BB%89%E0%BA%B2%E0%BA%99%E0%BA%AA%E0%BA%B0%E0%BA%94%E0%BA%A7%E0%BA%81%E0%BA%8A%E0%BA%B1%E0%BA%81%E0%BA%AD%E0%BA%BB%E0%BA%9A%E0%BB%81%E0%BA%AB%E0%BB%89%E0%BA%87-110709394441888" type="button" class="btn btn-primary" >Facebook&nbsp;<span class="bi bi-facebook"></span>&nbsp;:</a></td>
+                          <td><a style="display:inline;" class="text-decoration-none text-primary" href="https://www.facebook.com/M-Soul-by-Pmk-Lao-%E0%BA%AE%E0%BB%89%E0%BA%B2%E0%BA%99%E0%BA%AA%E0%BA%B0%E0%BA%94%E0%BA%A7%E0%BA%81%E0%BA%8A%E0%BA%B1%E0%BA%81%E0%BA%AD%E0%BA%BB%E0%BA%9A%E0%BB%81%E0%BA%AB%E0%BB%89%E0%BA%87-110709394441888">
+                            M-Soul by Pmk Lao 
+                            <p style="font-family: 'Phetsarath OT';display: inline;">ຮ້ານສະດວກຊັກອົບແຫ້ງ</p>
+                          </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><a href="https://api.whatsapp.com/send?phone=8562055611070&app=facebook&entry_point=page_cta&fbclid=IwAR0-Tr17hA63rBtlWO2hYR7cU3t29tGVIyiJN_NG026FUlWXMAKapzjJW1c" type="button" class="btn btn-success" >Whatsapp&nbsp;<span class="bi bi-whatsapp"></span>&nbsp;:</a></td>
+                          <td><a class="text-decoration-none" id="Whatapp" href="https://api.whatsapp.com/send?phone=8562055611070&app=facebook&entry_point=page_cta&fbclid=IwAR0-Tr17hA63rBtlWO2hYR7cU3t29tGVIyiJN_NG026FUlWXMAKapzjJW1c">+856 20 55 611 070</a></td>
+                            
+                        </tr>
+                        <tr>
+                        <tr>
+                          <td><a type="button" class="form-control form-control-sm btn btn-danger text-white" >Tel&nbsp;<span class="bi bi-telephone"></span>&nbsp;:</a></td>
+                            <td class="text-decoration-none">+856 20 55 611 070</td>
+                        </tr>
+                    </table>
+                </div>
+                </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock %}
