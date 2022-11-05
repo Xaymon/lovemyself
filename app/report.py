@@ -1,10 +1,8 @@
-from unicodedata import category
-from flask import Flask, render_template, request, redirect, request_tearing_down, url_for, session, jsonify, json
-from psycopg import Cursor
-import psycopg2
+
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
 from app import app
 from kk_con import *
-from datetime import datetime, date
+from datetime import datetime
 
 @app.route('/income_rp')
 def income_rp():

@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
-import psycopg2
 from app import app
 from kk_con import *
 from datetime import datetime

@@ -1,12 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json, flash
-import psycopg2
 from app import app
 from kk_con import *
-from datetime import datetime, date
+from datetime import datetime
 import re
-import psycopg2.extras
 from werkzeug.security import generate_password_hash, check_password_hash
-import urllib.request
 import os
 from werkzeug.utils import secure_filename
 

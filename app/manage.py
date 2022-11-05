@@ -1,10 +1,8 @@
-from unicodedata import category
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
-import psycopg2
 from app import app
 from kk_con import *
 from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 #customer
 @app.route('/customer')
