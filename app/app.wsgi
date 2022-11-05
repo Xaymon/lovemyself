@@ -2,6 +2,8 @@
 # coding: utf-8
 
 import sys
+import gunicorn.app.base
+import gunicorn.util
 
 sys.path.append('/home/flask')
 
